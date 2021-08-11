@@ -22,7 +22,10 @@
 @section('pageContent')
     <div class="content-wrapper">
         <div class="content-header row">
-            @include('layouts.includes.breadcrumb')
+            <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+                <h3 class="content-header-title mb-0 d-inline-block">Dashboard</h3>
+            </div>
+
         </div>
         <div class="content-body">
             <!-- eCommerce statistic -->

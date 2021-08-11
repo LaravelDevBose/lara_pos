@@ -22,8 +22,8 @@
                 <ul class="menu-content">
                     <li><a class="menu-item" href="invoice-summary.html"><i></i><span data-i18n="Invoice Summary">Product list</span></a></li>
                     <li><a class="menu-item" href="invoice-template.html"><i></i><span data-i18n="Invoice Template">Create Product</span></a></li>
-                    <li><a class="menu-item" href="invoice-list.html"><i></i><span data-i18n="Invoice List">Brand</span></a></li>
-                    <li><a class="menu-item" href="invoice-list.html"><i></i><span data-i18n="Invoice List">Category</span></a></li>
+                    <li><a class="menu-item" href="{{ route('brand.index') }}"><i></i><span data-i18n="Invoice List">Brand</span></a></li>
+                    <li><a class="menu-item" href="{{ route('category.index') }}"><i></i><span data-i18n="Invoice List">Category</span></a></li>
                 </ul>
             </li>
         </ul>

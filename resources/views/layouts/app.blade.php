@@ -23,6 +23,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/css/vendors.min.css') }}">
         <!-- END: Theme CSS-->
 
+
         @yield('pageCss')
 
         <!-- BEGIN: Custom CSS-->
@@ -69,11 +70,20 @@
     <script src="{{ asset('assets/js/core/app.js') }}"></script>
     <!-- END: Theme JS-->
 
+    <script src="{{ asset('formValidation/js/formValidation.js') }}"></script>
+    <script src="{{ asset('formValidation/js/framework/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('formValidation/js/globalValidationCustom.js') }}"></script>
+
     @yield('pageJs')
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 
-
+    <script>
+        $('.resetBtn').on('click', function (e){
+            e.preventDefault();
+            $(this).parents('form').trigger('reset');
+        })
+    </script>
     </body>
     <!-- END: Body-->
 

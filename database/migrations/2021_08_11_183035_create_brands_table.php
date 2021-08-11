@@ -14,7 +14,9 @@ class CreateBrandsTable extends Migration
     public function up()
     {
         Schema::create('brands', function (Blueprint $table) {
-            $table->id();
+            $table->id('brand_id');
+            $table->string('brand_name');
+            $table->boolean('status')->default(config('constant.active'));
             $table->timestamps();
         });
     }
