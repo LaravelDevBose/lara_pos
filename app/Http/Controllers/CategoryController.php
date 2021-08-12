@@ -16,7 +16,6 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $categories = Category::query()->notDelete()->with(['parent'])->latest()->paginate(20);
-//        dd($categories);
         $parents = Category::isActive()->onlyParents()->orderBy('category_name', 'asc')->pluck('category_name', 'category_id');
         return view('admin.category.index',compact('categories', 'parents'));
     }
@@ -63,7 +62,6 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $categories = Category::notDelete()->with('parent')->latest()->paginate(20);
         $parents = Category::onlyParents()->orderBy('category_name', 'asc')->pluck('category_name', 'category_id');
-//        dd($category);
         return view('admin.category.index', compact('category', 'categories', 'parents'));
     }
 
