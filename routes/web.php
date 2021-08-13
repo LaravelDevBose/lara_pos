@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ExpanseHeadController;
 
 
 Route::get('/', function () {
@@ -18,6 +19,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 
     Route::resource('/brand', BrandController::class)->except('create', 'show');
     Route::resource('/category', CategoryController::class)->except('create', 'show');
+    Route::resource('/expanse_heads', ExpanseHeadController::class)->except('create', 'show');
 
     Route::resource('/contacts', ContactController::class);
     Route::get('/datatable/contacts', [ContactController::class, 'datatable'])->name('contacts.datatable');

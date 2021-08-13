@@ -110,7 +110,7 @@
                             <div class="card-body">
                                 <!-- Invoices List table -->
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-white-space table-bordered display no-wrap icheck table-middle">
+                                    <table class="table table-striped table-white-space table-bordered display no-wrap table-middle">
                                         <thead>
                                         <tr>
                                             <th>#</th>
@@ -144,6 +144,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                {{ $brands->links() }}
                                 <!--/ Invoices table -->
                             </div>
                         </div>

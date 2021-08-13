@@ -41,6 +41,25 @@
                     </li>
                 </ul>
             </li>
+            <li class=" nav-item"><a href="#"><i class="la la-eur"></i><span class="menu-title" data-i18n="Invoice">Expanse</span></a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="menu-item" href="#">
+                            <span>Expanse list</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="menu-item" href="#">
+                            <span>Add Expanse</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="menu-item" href="{{ route('expanse_heads.index') }}">
+                            <span>Expanse heads</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

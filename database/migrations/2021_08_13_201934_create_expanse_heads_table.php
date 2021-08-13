@@ -14,8 +14,12 @@ class CreateExpanseHeadsTable extends Migration
     public function up()
     {
         Schema::create('expanse_heads', function (Blueprint $table) {
-            $table->id();
+            $table->id('head_id');
+            $table->string('head_title');
+            $table->text('head_note')->nullable();
+            $table->boolean('status')->default(config('constant.inactive'));
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
