@@ -26,6 +26,21 @@
                     <li><a class="menu-item" href="{{ route('category.index') }}"><i></i><span data-i18n="Invoice List">Category</span></a></li>
                 </ul>
             </li>
+
+            <li class=" nav-item"><a href="#"><i class="la la-users"></i><span class="menu-title" data-i18n="Invoice">Contacts</span></a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="menu-item" href="{{ route('contacts.index', ['type'=>'customer']) }}">
+                            <span>Customer list</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="menu-item" href="{{ route('contacts.index', ['type'=>'supplier']) }}">
+                            <span>Supplier list</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

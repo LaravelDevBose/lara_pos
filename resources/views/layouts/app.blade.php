@@ -74,16 +74,27 @@
     <script src="{{ asset('formValidation/js/framework/bootstrap.min.js') }}"></script>
     <script src="{{ asset('formValidation/js/globalValidationCustom.js') }}"></script>
 
-    @yield('pageJs')
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $('.resetBtn').on('click', function (e){
             e.preventDefault();
             $(this).parents('form').trigger('reset');
         })
+        $(".select2").select2({
+            dropdownAutoWidth: true,
+            width: '100%'
+        });
     </script>
+
+    @yield('pageJs')
+    <!-- Scripts -->
+    <script src="{{ mix('js/app.js') }}" defer></script>
+
     </body>
     <!-- END: Body-->
 

@@ -18,6 +18,7 @@ class CreateBrandsTable extends Migration
             $table->string('brand_name');
             $table->boolean('status')->default(config('constant.active'));
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

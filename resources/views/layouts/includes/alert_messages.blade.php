@@ -3,7 +3,7 @@
         <button type="button" class="close alertClose" >
             <span aria-hidden="true">×</span>
         </button>
-        <span class="message"></span>
+        <span class="message text-white"></span>
     </div>
 </div>
 <div class="alertBox hidden" id="success">

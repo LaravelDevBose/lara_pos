@@ -11,7 +11,7 @@
                         @if(!$loop->last)
                             <li class="breadcrumb-item text-capitalize"><a href="{{ $url }}">{{ $title }}</a></li>
                         @else
-                            <li class="breadcrumb-item active">{{ $title }}</li>
+                            <li class="breadcrumb-item active">{{ $url }}</li>
                         @endif
                     @endforeach
                 @endif
