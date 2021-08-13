@@ -6,6 +6,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ExpanseHeadController;
+use App\Http\Controllers\BankAccountController;
 
 
 Route::get('/', function () {
@@ -23,5 +24,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 
     Route::resource('/contacts', ContactController::class);
     Route::get('/datatable/contacts', [ContactController::class, 'datatable'])->name('contacts.datatable');
+
+    Route::resource('/bank_accounts', BankAccountController::class);
 
 });

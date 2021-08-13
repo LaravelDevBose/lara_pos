@@ -3,8 +3,6 @@
 @section('pageTitle', !empty($_GET['type'])? 'Add new '.ucfirst($_GET['type']): 'Add new contact')
 
 @section('pageCss')
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/forms/validation/form-validation.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/forms/selects/select2.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
 @endsection
 
@@ -288,8 +286,6 @@
 
 @section('pageJs')
     <!-- BEGIN: Page Vendor JS-->
-    <script src="{{ asset('assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
-    <script src="{{ asset('assets/vendors/js/forms/validation/jqBootstrapValidation.js') }}"></script>
     <script src="{{ asset('assets/vendors/js/pickers/pickadate/picker.js') }}"></script>
     <script src="{{ asset('assets/vendors/js/pickers/pickadate/picker.date.js') }}"></script>
     <!-- END: Page Vendor JS-->

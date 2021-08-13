@@ -41,7 +41,7 @@
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item"><a href="#"><i class="la la-eur"></i><span class="menu-title" data-i18n="Invoice">Expanse</span></a>
+            <li class=" nav-item"><a href="#"><i class="fal fa-file-invoice-dollar"></i><span class="menu-title" data-i18n="Invoice">Expanse</span></a>
                 <ul class="menu-content">
                     <li>
                         <a class="menu-item" href="#">
@@ -56,6 +56,15 @@
                     <li>
                         <a class="menu-item" href="{{ route('expanse_heads.index') }}">
                             <span>Expanse heads</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class=" nav-item"><a href="#"><i class="fal fa-money-check-edit-alt"></i><span class="menu-title" data-i18n="Invoice">Payment Accounts</span></a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="menu-item" href="{{ route('bank_accounts.index') }}">
+                            <span>Account list</span>
                         </a>
                     </li>
                 </ul>

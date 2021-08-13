@@ -57,7 +57,9 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="head_note">Head Note</label>
-                                                    <textarea name="head_note" id="head_note" rows="2" class="form-control" placeholder="Head note.."></textarea>
+                                                    <textarea name="head_note" id="head_note" rows="2" class="form-control" placeholder="Head note..">
+                                                        {{ !empty($expanse_head)? $expanse_head->head_note: '' }}
+                                                    </textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Head Status <b class="font-weight-bold text-warning">*</b></label>
