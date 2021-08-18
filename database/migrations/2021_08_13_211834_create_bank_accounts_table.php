@@ -15,8 +15,9 @@ class CreateBankAccountsTable extends Migration
     {
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->id('bank_acc_id');
-            $table->string('acc_holder_name');
+            $table->string('account_name');
             $table->string('account_number');
+            $table->string('acc_holder_name')->nullable();
             $table->boolean('account_type')->default(\App\Models\BankAccount::AccountTypes['Saving Account']);
             $table->float('opening_balance')->default(0.00);
             $table->longText('account_details')->nullable();

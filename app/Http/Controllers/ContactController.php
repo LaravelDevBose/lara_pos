@@ -17,8 +17,7 @@ class ContactController extends Controller
 {
     public function index(Request $request)
     {
-        $contacts = Contact::query()->notDelete()->searchBy($request)->latest()->paginate(20);
-        return view('modules.contact.index',compact('contacts'));
+        return view('modules.contact.index');
     }
 
     public function datatable(Request $request)
@@ -130,13 +129,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'contact_name' => ['required', 'string',Rule::unique('contacts', 'contact_name')->ignore($id,'contact_id')],
-        ],[
-            'contact_name.required'=> 'Contact name is Required',
-            'contact_name.string'=> 'Contact name Must be String',
-            'contact_name.unique'=> 'Contact is Already Added',
-        ]);
+
         $validator = Validator::make($request->all(), [
             'first_name' => ['required','string'],
             'mobile_no' => ['required',Rule::unique('contacts', 'mobile_no')->ignore($id,'contact_id')],

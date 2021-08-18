@@ -21,4 +21,9 @@ class ExpanseHead extends Model
         'head_note',
         'status'
     ];
+
+    public function expense()
+    {
+        return $this->hasMany(Expense::class, 'head_id', 'head_id');
+    }
 }

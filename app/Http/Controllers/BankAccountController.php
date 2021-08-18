@@ -33,13 +33,13 @@ class BankAccountController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'acc_holder_name' => ['required','string'],
+            'account_name' => ['required','string'],
             'account_number' => ['required','string'],
             'account_type' => ['required'],
             'opening_balance' => ['required'],
         ],[
-            'acc_holder_name.required'=> 'Account holder name is required',
-            'acc_holder_name.string'=> 'Account holder name Must be string',
+            'account_name.required'=> 'Account name is required',
+            'account_name.string'=> 'Account name Must be string',
             'account_number.required'=> 'Account number is required',
             'account_number.string'=> 'Account number Must be string',
             'account_type.required'=> 'Account type is required',
@@ -49,7 +49,8 @@ class BankAccountController extends Controller
             try {
                 DB::beginTransaction();
                 $account = BankAccount::create([
-                    'acc_holder_name' => $request->acc_holder_name,
+                    'account_name' => $request->account_name,
+                    'acc_holder_name' => !empty($request->acc_holder_name)? $request->acc_holder_name: null,
                     'account_number' => $request->account_number,
                     'account_type' => $request->account_type,
                     'opening_balance' => $request->opening_balance,
@@ -88,13 +89,13 @@ class BankAccountController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'acc_holder_name' => ['required','string'],
+            'account_name' => ['required','string'],
             'account_number' => ['required','string'],
             'account_type' => ['required'],
             'opening_balance' => ['required'],
         ],[
-            'acc_holder_name.required'=> 'Account holder name is required',
-            'acc_holder_name.string'=> 'Account holder name Must be string',
+            'account_name.required'=> 'Account name is required',
+            'account_name.string'=> 'Account name Must be string',
             'account_number.required'=> 'Account number is required',
             'account_number.string'=> 'Account number Must be string',
             'account_type.required'=> 'Account type is required',
@@ -108,7 +109,8 @@ class BankAccountController extends Controller
                     throw new \Exception('Invalid Account Information');
                 }
                 $accountU = $account->update([
-                    'acc_holder_name' => $request->acc_holder_name,
+                    'account_name' => $request->account_name,
+                    'acc_holder_name' => !empty($request->acc_holder_name)? $request->acc_holder_name: null,
                     'account_number' => $request->account_number,
                     'account_type' => $request->account_type,
                     'opening_balance' => $request->opening_balance,

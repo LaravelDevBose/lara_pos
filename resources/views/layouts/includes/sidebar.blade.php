@@ -44,13 +44,13 @@
             <li class=" nav-item"><a href="#"><i class="fal fa-file-invoice-dollar"></i><span class="menu-title" data-i18n="Invoice">Expanse</span></a>
                 <ul class="menu-content">
                     <li>
-                        <a class="menu-item" href="#">
+                        <a class="menu-item" href="{{ route('expenses.index') }}">
                             <span>Expanse list</span>
                         </a>
                     </li>
                     <li>
-                        <a class="menu-item" href="#">
-                            <span>Add Expanse</span>
+                        <a class="menu-item" href="{{ route('expenses.create') }}">
+                            <span>New Expanse</span>
                         </a>
                     </li>
                     <li>
@@ -65,6 +65,15 @@
                     <li>
                         <a class="menu-item" href="{{ route('bank_accounts.index') }}">
                             <span>Account list</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class=" nav-item"><a href="#"><i class="la la-cogs"></i><span class="menu-title" data-i18n="Invoice">Setting</span></a>
+                <ul class="menu-content">
+                    <li>
+                        <a class="menu-item" href="{{ route('business_locations.index') }}">
+                            <span>Business Locations</span>
                         </a>
                     </li>
                 </ul>

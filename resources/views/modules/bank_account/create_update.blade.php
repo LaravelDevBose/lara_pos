@@ -35,16 +35,26 @@
                                     <div class="col-sm-12 col-md-5">
                                         <div class="form-group">
                                             <div class="controls">
-                                                <label>Account Holder Name <b class="font-weight-bold text-warning">*</b></label>
+                                                <label>Account Name <b class="font-weight-bold text-warning">*</b></label>
+                                                <input type="text" class="form-control"
+                                                       name="account_name"
+                                                       value="{{ !empty($account)? $account->account_name: '' }}"
+                                                       placeholder="Account Name"
+                                                       data-fv-notempty='true'
+                                                       data-fv-blank='true'
+                                                       data-rule-required='true'
+                                                       data-fv-notempty-message='Account Name Is Required'
+                                                       required
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label>Account Holder Name</label>
                                                 <input type="text" class="form-control"
                                                        name="acc_holder_name"
                                                        value="{{ !empty($account)? $account->acc_holder_name: '' }}"
                                                        placeholder="Full Name"
-                                                       data-fv-notempty='true'
-                                                       data-fv-blank='true'
-                                                       data-rule-required='true'
-                                                       data-fv-notempty-message='Account Holder Name Is Required'
-                                                       required
                                                 >
                                             </div>
                                         </div>

@@ -7,6 +7,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ExpanseHeadController;
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\BusinessLocationController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\TransactionController;
 
 
 Route::get('/', function () {
@@ -20,11 +23,18 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 
     Route::resource('/brand', BrandController::class)->except('create', 'show');
     Route::resource('/category', CategoryController::class)->except('create', 'show');
-    Route::resource('/expanse_heads', ExpanseHeadController::class)->except('create', 'show');
+    Route::resource('/expanse-heads', ExpanseHeadController::class)->except('create', 'show')->names('expanse_heads');
 
     Route::resource('/contacts', ContactController::class);
     Route::get('/datatable/contacts', [ContactController::class, 'datatable'])->name('contacts.datatable');
 
-    Route::resource('/bank_accounts', BankAccountController::class);
+    Route::resource('/bank-accounts', BankAccountController::class)->names('bank_accounts');
+    Route::resource('/business-locations', BusinessLocationController::class)->names('business_locations');
 
+    Route::resource('/expenses', ExpenseController::class)->except('show');
+    Route::get('/datatable/expenses', [ExpenseController::class, 'datatable'])->name('expenses.datatable');
+
+    Route::get('view/{id}/payments', [TransactionController::class, 'show'])->name('view.transactions');
+    Route::get('add/{id}/transaction', [TransactionController::class, 'create'])->name('add.transactions');
+    Route::post('store/transaction', [TransactionController::class, 'store'])->name('store.transactions');
 });

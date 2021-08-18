@@ -113,9 +113,6 @@ class Contact extends Model
         }else{
             return $char.($count+1);
         }
-
-
-
     }
 
 }

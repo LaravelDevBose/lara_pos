@@ -24,6 +24,7 @@ class BankAccount extends Model
     protected $primaryKey='bank_acc_id';
 
     protected $fillable=[
+        'account_name',
         'acc_holder_name',
         'account_number',
         'account_type',
@@ -35,7 +36,7 @@ class BankAccount extends Model
 
     protected $casts=['account_details'];
 
-    protected $appends = ['account_class'];
+    protected $appends = ['account_class', 'account_info'];
     public function getAccountDetailsAttribute()
     {
         return json_decode($this->attributes['account_details'], true);
@@ -44,5 +45,15 @@ class BankAccount extends Model
     {
         $types = array_flip(self::AccountTypes);
         return $types[$this->attributes['account_type']];
+    }
+
+    public function getAccountInfoAttribute()
+    {
+        return $this->attributes['account_name']. ' ( Balance: '.number_format($this->attributes['opening_balance'], 2). ' )';
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'account_id', 'bank_acc_id');
     }
 }

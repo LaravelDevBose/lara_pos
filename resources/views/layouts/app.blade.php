@@ -21,6 +21,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/core/menu/menu-types/vertical-menu-modern.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/core/colors/palette-gradient.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/css/vendors.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/css/forms/selects/select2.min.css') }}">
         <!-- END: Theme CSS-->
 
 
@@ -60,7 +61,7 @@
         <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2019 <a class="text-bold-800 grey darken-2" href="https://1.envato.market/modern_admin" target="_blank">PIXINVENT</a></span><span class="float-md-right d-none d-lg-block">Hand-crafted & Made with<i class="ft-heart pink"></i><span id="scroll-top"></span></span></p>
     </footer>
     <!-- END: Footer-->
-
+    @include('layouts.includes.modals')
     <!-- BEGIN: Vendor JS-->
     <script src="{{ asset('assets/vendors/js/vendors.min.js') }}"></script>
     <!-- BEGIN Vendor JS-->
@@ -69,6 +70,7 @@
     <script src="{{ asset('assets/js/core/app-menu.js') }}"></script>
     <script src="{{ asset('assets/js/core/app.js') }}"></script>
     <!-- END: Theme JS-->
+    <script src="{{ asset('assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
 
     <script src="{{ asset('formValidation/js/formValidation.js') }}"></script>
     <script src="{{ asset('formValidation/js/framework/bootstrap.min.js') }}"></script>
@@ -85,7 +87,14 @@
             e.preventDefault();
             $(this).parents('form').trigger('reset');
         })
-        $(".select2").select2({
+
+        $("body").delegate(".pickadate", "focusin", function () {
+            $(this).pickadate({
+                format: 'mm/d/yyyy',
+                formatSubmit: 'mm/dd/yyyy',
+            });
+        });
+        $('body .select2').select2({
             dropdownAutoWidth: true,
             width: '100%'
         });

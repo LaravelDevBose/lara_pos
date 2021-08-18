@@ -60,47 +60,44 @@ trait HasAttachmentTrait
 //        $path = $image->store($this->path, 'local');
         $size = $image->getSize();
 
-        if (Attachment::type[$extension] == 'image') {
-            try {
-                $path = $this->storePublicly($image);
+        try {
+            $path = $this->storePublicly($image);
 
-                $img = Image::make($image->getRealPath())->encode();
+            $img = Image::make($image->getRealPath())->encode();
 
-                $height = $img->height();
-                $width = $img->width();
-                if ($width > $height && $width > 1500) {
-                    $img->resize(1500, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                } elseif ($height > 1500) {
-                    $img->resize(null, 800, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                }
-                $img->save($this->path.'/'.$path);
-                clearstatcache();
-                $size = $img->filesize();
-
-                if (env('FILESYSTEM_DRIVER') == 's3') {
-                    Storage::disk('s3')->put($path, file_get_contents( $this->path.'/'.$path));
-                    unlink($this->path.'/'.$path);
-                }
-
-                $attachment = $this->attachment()->create([
-                    'user_id'=> auth()->id(),
-                    'file_original_name'=> $file_original_name,
-                    'file_name'=>$image->hashName(),
-                    'file_size'=>$size,
-                    'extension'=>$extension,
-                    'type'=>Attachment::type[$extension],
-                    'url'=>$path
-                ]);
-                if(!empty($attachment)){
-                    return $attachment->id;
-                }
-            } catch (\Exception $e) {
-                return false;
+            $height = $img->height();
+            $width = $img->width();
+            if ($width > $height && $width > 1500) {
+                $img->resize(1500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            } elseif ($height > 1500) {
+                $img->resize(null, 800, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
             }
+            $img->save($this->path.'/'.$path);
+            clearstatcache();
+            $size = $img->filesize();
+
+            if (env('FILESYSTEM_DRIVER') == 's3') {
+                Storage::disk('s3')->put($path, file_get_contents( $this->path.'/'.$path));
+                unlink($this->path.'/'.$path);
+            }
+
+            $attachment = $this->attachment()->create([
+                'user_id'=> auth()->id(),
+                'file_original_name'=> $file_original_name,
+                'file_name'=>$image->hashName(),
+                'file_size'=>$size,
+                'extension'=>$extension,
+                'url'=>$path
+            ]);
+            if(!empty($attachment)){
+                return $attachment->id;
+            }
+        } catch (\Exception $e) {
+            return false;
         }
     }
     public function singleUploadImage($image)
@@ -120,55 +117,91 @@ trait HasAttachmentTrait
         }
 //        $path = $image->store($this->path, 'local');
         $size = $image->getSize();
+        try {
+            $path = $this->storePublicly($image);
 
-        if (Attachment::type[$extension] == 'image') {
-            try {
-                $path = $this->storePublicly($image);
+            $img = Image::make($image->getRealPath())->encode();
 
-                $img = Image::make($image->getRealPath())->encode();
-
-                $height = $img->height();
-                $width = $img->width();
-                if ($width > $height && $width > 1500) {
-                    $img->resize(1500, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                } elseif ($height > 1500) {
-                    $img->resize(null, 800, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                }
-                $img->save($this->path.'/'.$path);
-                clearstatcache();
-                $size = $img->filesize();
-
-                if (env('FILESYSTEM_DRIVER') == 's3') {
-                    Storage::disk('s3')->put($path, file_get_contents( $this->path.'/'.$path));
-                    unlink($this->path.'/'.$path);
-                }
-
-                tap($this->attachment, function ($previous) use ($file_original_name, $path, $image, $size, $extension) {
-                    try {
-                        $attachment = $this->attachment()->create([
-                            'user_id'=> auth()->id(),
-                            'file_original_name'=> $file_original_name,
-                            'file_name'=>$image->hashName(),
-                            'file_size'=>$size,
-                            'extension'=>$extension,
-                            'type'=>Attachment::type[$extension],
-                            'url'=>$path
-                        ]);
-                        if ($previous) {
-                            $previous->delete();
-                        }
-                        return $attachment->id;
-                    }catch (\Exception $exception){
-                        return false;
-                    }
+            $height = $img->height();
+            $width = $img->width();
+            if ($width > $height && $width > 1500) {
+                $img->resize(1500, null, function ($constraint) {
+                    $constraint->aspectRatio();
                 });
-            } catch (\Exception $e) {
+            } elseif ($height > 1500) {
+                $img->resize(null, 800, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            }
+            $img->save($this->path.'/'.$path);
+            clearstatcache();
+            $size = $img->filesize();
+
+            if (env('FILESYSTEM_DRIVER') == 's3') {
+                Storage::disk('s3')->put($path, file_get_contents( $this->path.'/'.$path));
+                unlink($this->path.'/'.$path);
+            }
+
+            tap($this->attachment, function ($previous) use ($file_original_name, $path, $image, $size, $extension) {
+                try {
+                    $attachment = $this->attachment()->create([
+                        'user_id'=> auth()->id(),
+                        'file_original_name'=> $file_original_name,
+                        'file_name'=>$image->hashName(),
+                        'file_size'=>$size,
+                        'extension'=>$extension,
+                        'url'=>$path
+                    ]);
+                    if ($previous) {
+                        $previous->delete();
+                    }
+                    return $attachment->id;
+                }catch (\Exception $exception){
+                    return false;
+                }
+            });
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function singleFileUpload($uploadFile)
+    {
+//        return $uploadFile;
+        $this->path = storage_path('app/public');
+        $extension = strtolower($uploadFile->getClientOriginalExtension());
+        $arr = explode('.', $uploadFile->getClientOriginalName());
+
+        $file_original_name= null;
+        for ($i = 0; $i < count($arr) - 1; $i++) {
+            if ($i == 0) {
+                $file_original_name .= $arr[$i];
+            } else {
+                $file_original_name .= "." . $arr[$i];
+            }
+        }
+        $size = $uploadFile->getSize();
+        try {
+            $path = $this->storePublicly($uploadFile);
+            $previous = $this->attachment;
+            try {
+                $attachment = $this->attachment()->create([
+                    'user_id'=> auth()->id(),
+                    'file_original_name'=> $file_original_name,
+                    'file_name'=>$uploadFile->hashName(),
+                    'file_size'=>$size,
+                    'extension'=>$extension,
+                    'url'=>$path
+                ]);
+                if (!empty($previous) && !empty($previous->id)) {
+                    $previous->delete();
+                }
+                return $attachment->id;
+            }catch (\Exception $exception){
                 return false;
             }
+        } catch (\Exception $e) {
+            return false;
         }
     }
 
