@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', !empty($location)? 'Update Expense':'Add new Expense')
+@section('pageTitle', !empty($expense)? 'Update Expense':'Add new Expense')
 
 @section('pageCss')
     <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">

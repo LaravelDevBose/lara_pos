@@ -9,6 +9,7 @@ use App\Http\Controllers\ExpanseHeadController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\BusinessLocationController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 
 
@@ -37,4 +38,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::get('view/{id}/payments', [TransactionController::class, 'show'])->name('view.transactions');
     Route::get('add/{id}/transaction', [TransactionController::class, 'create'])->name('add.transactions');
     Route::post('store/transaction', [TransactionController::class, 'store'])->name('store.transactions');
+
+    Route::resource('products', ProductController::class);
 });

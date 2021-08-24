@@ -22,7 +22,7 @@ class CreateExpensesTable extends Migration
             $table->unsignedBigInteger('expense_for')->nullable();
             $table->float('total_amount');
             $table->text('expense_note')->nullable();
-            $table->boolean('payment_status')->default(\App\Models\Payment::PaymentStatus['Paid']);
+            $table->boolean('payment_status')->default(\App\Models\Transaction::PaymentStatus['Paid']);
             $table->boolean('status')->default(config('constant.active'));
             $table->timestamps();
             $table->softDeletes();

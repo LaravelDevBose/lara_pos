@@ -20,8 +20,8 @@
 
             <li class=" nav-item"><a href="#"><i class="la la-clipboard"></i><span class="menu-title" data-i18n="Invoice">Product</span></a>
                 <ul class="menu-content">
-                    <li><a class="menu-item" href="invoice-summary.html"><i></i><span data-i18n="Invoice Summary">Product list</span></a></li>
-                    <li><a class="menu-item" href="invoice-template.html"><i></i><span data-i18n="Invoice Template">Create Product</span></a></li>
+                    <li><a class="menu-item" href="{{ route('products.index') }}"><i></i><span data-i18n="Invoice Summary">Product list</span></a></li>
+                    <li><a class="menu-item" href="{{ route('products.create') }}"><i></i><span data-i18n="Invoice Template">Create Product</span></a></li>
                     <li><a class="menu-item" href="{{ route('brand.index') }}"><i></i><span data-i18n="Invoice List">Brand</span></a></li>
                     <li><a class="menu-item" href="{{ route('category.index') }}"><i></i><span data-i18n="Invoice List">Category</span></a></li>
                 </ul>
