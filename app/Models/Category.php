@@ -61,4 +61,9 @@ class Category extends Model
     public function parent(){
         return $this->hasOne(Category::class, 'category_id', 'parent_id');
     }
+
+    public function product()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'category_id');
+    }
 }

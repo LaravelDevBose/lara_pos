@@ -40,4 +40,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::post('store/transaction', [TransactionController::class, 'store'])->name('store.transactions');
 
     Route::resource('products', ProductController::class);
+    Route::get('/datatable/products', [ProductController::class, 'datatable'])->name('products.datatable');
 });

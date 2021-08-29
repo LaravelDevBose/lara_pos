@@ -144,7 +144,7 @@ trait HasAttachmentTrait
 
             tap($this->attachment, function ($previous) use ($file_original_name, $path, $image, $size, $extension) {
                 try {
-                    $attachment = $this->attachment()->create([
+                    $attach = $this->attachment()->create([
                         'user_id'=> auth()->id(),
                         'file_original_name'=> $file_original_name,
                         'file_name'=>$image->hashName(),
@@ -152,10 +152,11 @@ trait HasAttachmentTrait
                         'extension'=>$extension,
                         'url'=>$path
                     ]);
-                    if ($previous) {
+
+                    if (!empty($previous)) {
                         $previous->delete();
                     }
-                    return $attachment->id;
+                    return $attach->id;
                 }catch (\Exception $exception){
                     return false;
                 }

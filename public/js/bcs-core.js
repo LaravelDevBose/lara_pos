@@ -7,8 +7,8 @@ $(document).on('change', '.file-input', function(e) {
         for (let i= 0; i < filesAmount; i++) {
             var reader = new FileReader();
             reader.onload = function(readData) {
-                let imagePvr = `<div class="d-flex justify-content-between align-items-center mt-2 file-preview-item"
-                                    title="179269107_233640455202983_6854062027931577475_n.jpg">
+                let imagePvr = `<div class="d-flex justify-content-between align-items-center mx-1 file-preview-item"
+                                    title="${inputs.files[i].name}">
                                     <div class="align-items-center align-self-stretch d-flex justify-content-center thumb">
                                         <img src="${readData.target.result}"
                                             class="img-fit">
