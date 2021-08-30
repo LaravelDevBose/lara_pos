@@ -115,4 +115,9 @@ class Contact extends Model
         }
     }
 
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class, 'supplier_id', 'contact_id');
+    }
+
 }

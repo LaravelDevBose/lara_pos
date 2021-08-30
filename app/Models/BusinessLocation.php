@@ -55,4 +55,14 @@ class BusinessLocation extends Model
     {
         return $this->hasMany(Expense::class, 'location_id', 'location_id');
     }
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class, 'location_id', 'location_id');
+    }
+
+    public function stocks()
+    {
+        return $this->hasMany(ProductStock::class, 'location_id', 'location_id');
+    }
 }

@@ -11,14 +11,22 @@
                 <span data-i18n="Ecommerce">Ecommerce</span>
                 <i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Ecommerce"></i>
             </li>
-            <li class=" nav-item">
-                <a href="ecommerce-product-shop.html">
-                    <i class="la la-th-large"></i>
-                    <span class="menu-title" data-i18n="Shop">Shop</span>
-                </a>
+{{--            <li class=" nav-item">--}}
+{{--                <a href="ecommerce-product-shop.html">--}}
+{{--                    <i class="la la-th-large"></i>--}}
+{{--                    <span class="menu-title" data-i18n="Shop">Shop</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+
+            <li class=" nav-item"><a href="#"><i class="la la-cart-plus"></i><span class="menu-title" data-i18n="Invoice">Purchase</span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{ route('purchases.index') }}"><i></i><span data-i18n="Invoice Summary">Purchase list</span></a></li>
+                    <li><a class="menu-item" href="{{ route('purchases.create') }}"><i></i><span data-i18n="Invoice Template">Add Purchase</span></a></li>
+                    <li><a class="menu-item" href="{{ route('brand.index') }}"><i></i><span data-i18n="Invoice List">Purchase Return</span></a></li>
+                </ul>
             </li>
 
-            <li class=" nav-item"><a href="#"><i class="la la-clipboard"></i><span class="menu-title" data-i18n="Invoice">Product</span></a>
+            <li class=" nav-item"><a href="#"><i class="la la-list-ul"></i><span class="menu-title" data-i18n="Invoice">Product</span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="{{ route('products.index') }}"><i></i><span data-i18n="Invoice Summary">Product list</span></a></li>
                     <li><a class="menu-item" href="{{ route('products.create') }}"><i></i><span data-i18n="Invoice Template">Create Product</span></a></li>

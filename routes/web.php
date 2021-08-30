@@ -11,6 +11,7 @@ use App\Http\Controllers\BusinessLocationController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\Purchase\PurchaseController;
 
 
 Route::get('/', function () {
@@ -41,4 +42,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 
     Route::resource('products', ProductController::class);
     Route::get('/datatable/products', [ProductController::class, 'datatable'])->name('products.datatable');
+
+    Route::resource('purchases', PurchaseController::class);
+    Route::get('/datatable/purchases', [PurchaseController::class, 'datatable'])->name('purchases.datatable');
 });

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasAttachmentTrait;
 use App\Traits\HasFilter;
+use App\Traits\StockManagementTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,6 +15,7 @@ class Product extends Model
     use HasAttachmentTrait;
     use SoftDeletes;
     use HasFilter;
+    use StockManagementTrait;
 
     const TYPES = [
         'Single'=>1,
@@ -66,5 +68,10 @@ class Product extends Model
     public function similars()
     {
         return $this->belongsToMany(Product::class, 'similar_products', 'product_id', 'sim_prod_id');
+    }
+
+    public function pruchase_items()
+    {
+        return $this->hasMany(PurchaseItem::class, 'product_id', 'product_id');
     }
 }

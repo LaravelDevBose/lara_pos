@@ -34,6 +34,9 @@ class ProductController extends Controller
                 $types = array_flip(Product::TYPES);
                 return $types[$data->product_type];
             })
+            ->addColumn('image', function ($data){
+                return '<img src="'.$data->attachment->image_path.'" style="width:40px; height:40px;">';
+            })
             ->addColumn('action',function($data){
                 $actionButton = '<span class="dropdown">
                                     <a id="btnSearchDrop2" href="#" title="Action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right btn btn-info btn-sm"><i class="la la-cogs"></i></a>
@@ -41,7 +44,7 @@ class ProductController extends Controller
                 $actionButton .= '<a  href="' . route('products.edit', $data->product_id) . '"  title="Edit" class="dropdown-item"><i class="far fa-edit"></i> Edit </a>';
                 $actionButton .= '</span></span>';
                 return $actionButton;
-            })->rawColumns(['action'])->make(true);
+            })->rawColumns(['action', 'image'])->make(true);
 
     }
 

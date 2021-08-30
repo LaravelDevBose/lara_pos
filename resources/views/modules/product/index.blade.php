@@ -42,6 +42,7 @@
                                         <thead>
                                         <tr>
                                             <th class="text-center">Actions</th>
+                                            <th>Image</th>
                                             <th>Reference</th>
                                             <th>Description</th>
                                             <th>Category</th>
@@ -93,13 +94,14 @@
                 },
                 columnDefs: [
                     {
-                        className: "d-none d-xl-table-cell", targets: [2],
-                        className: "text-center", targets: [0,8],
-                        className: "text-right", targets: [6, 7],
+                        className: "d-none d-xl-table-cell", targets: [3],
+                        className: "text-center", targets: [0],
+                        className: "text-right", targets: [7,8],
                     }
                 ],
                 columns: [
                     {data: 'action', name: 'action', searchable: false, orderable: false},
+                    {data: 'image', name: 'image', searchable: false, orderable: false},
                     {data: 'product_reference', name: 'product_reference'},
                     {data: 'short_description', name: 'short_description', orderable: false},
                     {data: 'category_id', name: 'category_id'},
