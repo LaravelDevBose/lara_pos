@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Purchase;
 
 use App\Http\Controllers\Controller;
+use App\Models\BusinessLocation;
+use App\Models\Transaction;
+use App\Models\Contact;
+use App\Models\Product;
+use App\Models\PurchaseItem;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -19,6 +24,10 @@ class PurchaseController extends Controller
 
     public function create()
     {
-        return view('modules.purchase.new_purchase');
+        $suppliers = Contact::OnlySuppler()->get();
+        $businessLocations = BusinessLocation::all();
+        $products = Product::all();
+        $paymentMethods = array_flip(Transaction::Methods);
+        return view('modules.purchase.new_purchase', compact('suppliers','businessLocations','products','paymentMethods'));
     }
 }
