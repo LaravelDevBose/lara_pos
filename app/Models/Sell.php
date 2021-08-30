@@ -8,43 +8,56 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Purchase extends Model
+class Sell extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use HasAttachmentTrait;
+    use SoftDeletes;
     use HasFilter;
 
-    const PurchaseStatus = [
-        'Received'=>1,
-        'Ordered'=>2,
-        'Pending'=>3,
+    const SellStatus = [
+        'Final'=>1,
+        'Draft'=>2,
+        'Quotation'=>3,
     ];
 
-    protected $table='purchases';
-    protected $primaryKey='purchase_id';
+    const ShippingStatus=[
+        'Ordered'=>1,
+        'Packed'=>2,
+        'Shipped'=>3,
+        'Delivered'=>4,
+        'Cancel'=>5
+    ];
+
+    protected $table='sells';
+    protected $primaryKey='sell_id';
 
     protected $fillable=[
-        'supplier_id',
         'location_id',
+        'customer_id',
         'reference_no',
-        'purchase_date',
+        'sell_date',
         'total_qty',
-        'subtotal',
         'discount_type',
         'discount_amount',
+        'subtotal',
         'tax_id',
         'tax_amount',
+        'shipping_charge',
         'total_amount',
         'pay_term_number',
         'pay_term_type',
-        'purchase_status',
-        'status'
+        'sale_note',
+        'shipping_details',
+        'shipping_address',
+        'shipping_status',
+        'sell_status',
+        'status',
     ];
 
-    public function supplier()
+    public function customer()
     {
-        return $this->belongsTo(Contact::class, 'supplier_id', 'contact_id');
+        return $this->belongsTo(Contact::class, 'customer_id', 'contact_id');
     }
 
     public function location()
@@ -54,6 +67,6 @@ class Purchase extends Model
 
     public function items()
     {
-        return $this->hasMany(PurchaseItem::class, 'purchase_id', 'purchase_id');
+        return $this->hasMany(SellItem::class, 'sell_id', 'sell_id');
     }
 }

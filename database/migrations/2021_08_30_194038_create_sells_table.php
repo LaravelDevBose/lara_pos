@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchasesTable extends Migration
+class CreateSellsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,27 @@ class CreatePurchasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchases', function (Blueprint $table) {
-            $table->id('purchase_id');
-            $table->unsignedBigInteger('supplier_id');
+        Schema::create('sells', function (Blueprint $table) {
+            $table->id('sell_id');
             $table->unsignedBigInteger('location_id');
+            $table->unsignedBigInteger('customer_id');
             $table->string('reference_no');
-            $table->dateTime('purchase_date')->useCurrent();
+            $table->dateTime('sell_date')->useCurrent();
             $table->unsignedInteger('total_qty');
-            $table->float('subtotal');
             $table->boolean('discount_type')->default(config('constant.discountType.None'));
             $table->float('discount_amount')->default('0.00');
+            $table->float('subtotal');
             $table->unsignedBigInteger('tax_id');
             $table->float('tax_amount')->default('0.00');
+            $table->float('shipping_charge')->default(0);
             $table->float('total_amount');
             $table->boolean('pay_term_number')->default(15);
             $table->boolean('pay_term_type')->default(config('constant.pay_terms_type.Days'));
-            $table->boolean('purchase_status')->default(\App\Models\Purchase::PurchaseStatus['Ordered']);
+            $table->text('sale_note')->nullable();
+            $table->text('shipping_details')->nullable();
+            $table->text('shipping_address')->nullable();
+            $table->boolean('shipping_status')->default(\App\Models\Sell::ShippingStatus['Ordered']);
+            $table->boolean('sell_status')->default(\App\Models\Sell::SellStatus['Final']);
             $table->boolean('status')->default(config('constant.active'));
             $table->timestamps();
             $table->softDeletes();
@@ -42,6 +47,6 @@ class CreatePurchasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchases');
+        Schema::dropIfExists('sells');
     }
 }

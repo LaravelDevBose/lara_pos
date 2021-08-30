@@ -74,4 +74,9 @@ class Product extends Model
     {
         return $this->hasMany(PurchaseItem::class, 'product_id', 'product_id');
     }
+
+    public function sell_items()
+    {
+        return $this->hasMany(SellItem::class, 'product_id', 'product_id');
+    }
 }

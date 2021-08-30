@@ -7,35 +7,36 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PurchaseItem extends Model
+class SellItem extends Model
 {
     use HasFactory;
     use SoftDeletes;
     use StockManagementTrait;
 
-    protected $table='purchase_items';
+    protected $table='sell_items';
     protected $primaryKey='item_id';
 
     protected $fillable=[
-        'purchase_id',
+        'sell_id',
         'product_id',
         'product_name',
+        'product_note',
         'product_unit',
         'item_qty',
-        'pp_without_dis',
-        'discount_percent',
         'item_price',
+        'discount_type',
+        'discount_amount',
+        'sub_total',
         'item_tax_id',
         'item_tax',
-        'pp_inc_tax',
-        'sub_total',
+        'price_inc_tax',
         'total_amount',
         'status'
     ];
 
-    public function purchase()
+    public function sell()
     {
-        return $this->belongsTo(Purchase::class, 'purchase_id', 'purchase_id');
+        return $this->belongsTo(Sell::class, 'sell_id', 'sell_id');
     }
 
     public function product()
