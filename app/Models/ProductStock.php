@@ -17,7 +17,7 @@ class ProductStock extends Model
     protected $fillable=[
         'location_id',
         'product_id',
-        'current_stock',
+        'stock',
     ];
 
     public function product()

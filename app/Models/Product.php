@@ -22,6 +22,12 @@ class Product extends Model
         'Combo'=>2
     ];
 
+    const Units = [
+        'Pcs'=>1,
+        'Kg'=>2,
+        'GM'=>3
+    ];
+
     protected $table='products';
     protected $primaryKey='product_id';
 
@@ -29,7 +35,9 @@ class Product extends Model
         'category_id',
         'brand_id',
         'barcode',
+        'product_name',
         'product_reference',
+        'unit_id',
         'short_description',
         'long_description',
         'profit_margin',
@@ -39,6 +47,30 @@ class Product extends Model
         'product_type',
         'status'
     ];
+
+    protected $appends=['current_stock', 'product_info', 'unit_label'];
+
+    public function getProductInfoAttribute()
+    {
+        $units = array_flip(self::Units);
+        return $this->attributes['product_reference'].'-'.$this->product_stock().' '.$units[$this->attributes['unit_id']].' (s) ';
+    }
+
+    public function getUnitLabelAttribute()
+    {
+        $units = array_flip(self::Units);
+        return $units[$this->attributes['unit_id']];
+    }
+
+    public function scopeSearchBy($query, $request)
+    {
+        $search_key = $request->search_key;
+        $query = $query->where('product_reference', 'like', '%'.$search_key.'%')
+                ->orWhere('short_description', 'like', '%'. $search_key.'%')
+            ->orderByRaw("IF('product_reference' = '{$search_key}',2,IF(product_reference LIKE '%{$search_key}%',1,0)) DESC, length(product_reference)");
+
+        return $query;
+    }
 
     public function category()
     {

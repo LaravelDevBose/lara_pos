@@ -17,8 +17,9 @@ class CreateProductStocksTable extends Migration
             $table->id('stock_id');
             $table->unsignedBigInteger('location_id');
             $table->unsignedBigInteger('product_id');
-            $table->float('current_stock');
+            $table->float('stock');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('location_id')
                 ->references('location_id')

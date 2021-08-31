@@ -294,4 +294,10 @@ class ProductController extends Controller
             return ResponseTrait::ValidationResponse(array_values($validator->errors()->getMessages()), 'validation');
         }
     }
+
+    public function ajax_get_products(Request $request)
+    {
+        $products = Product::query()->isActive()->searchBy($request)->get();
+        return ResponseTrait::SingleResponse($products, 'success', Response::HTTP_OK);
+    }
 }

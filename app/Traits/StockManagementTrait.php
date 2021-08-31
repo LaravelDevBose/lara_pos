@@ -16,4 +16,21 @@ trait StockManagementTrait
     {
         return $this->hasMany(ProductStock::class, 'product_id', 'product_id');
     }
+
+    public function getCurrentStockAttribute()
+    {
+        if(!empty($this->stocks)){
+            return $this->stocks()->sum('stock');
+        }
+        return 0;
+
+    }
+
+    public function product_stock()
+    {
+        if(!empty($this->stocks)){
+            return $this->stocks()->sum('stock');
+        }
+        return 0;
+    }
 }

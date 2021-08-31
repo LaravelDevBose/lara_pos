@@ -53,4 +53,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 
 
     Route::get('/datatable/sells', [SellController::class, 'datatable'])->name('sells.datatable');
+
+    Route::group(['prefix'=>'ajax', 'as'=>'ajax.'], function (){
+        Route::get('/product-list', [ProductController::class, 'ajax_get_products'])->name('get.products');
+    });
 });

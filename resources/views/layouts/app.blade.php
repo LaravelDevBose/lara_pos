@@ -75,8 +75,6 @@
     <script src="{{ asset('formValidation/js/formValidation.js') }}"></script>
     <script src="{{ asset('formValidation/js/framework/bootstrap.min.js') }}"></script>
     <script src="{{ asset('formValidation/js/globalValidationCustom.js') }}"></script>
-
-    <script src="{{ asset('js/bcs-core.js') }}"></script>
     <script>
         $.ajaxSetup({
             headers: {
@@ -104,7 +102,7 @@
     @yield('pageJs')
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
-
+    <script src="{{ asset('js/bcs-core.js') }}"></script>
     </body>
     <!-- END: Body-->
 
