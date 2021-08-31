@@ -26,6 +26,14 @@
                 </ul>
             </li>
 
+            <li class=" nav-item"><a href="#"><i class="la la-cart-plus"></i><span class="menu-title" data-i18n="Invoice">Sell</span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{ route('purchases.index') }}"><i></i><span data-i18n="Invoice Summary">Sell list</span></a></li>
+                    <li><a class="menu-item" href="{{ route('sells.create') }}"><i></i><span data-i18n="Invoice Template">Add Sell</span></a></li>
+                    <li><a class="menu-item" href="{{ route('brand.index') }}"><i></i><span data-i18n="Invoice List">Sell Return</span></a></li>
+                </ul>
+            </li>
+
             <li class=" nav-item"><a href="#"><i class="la la-list-ul"></i><span class="menu-title" data-i18n="Invoice">Product</span></a>
                 <ul class="menu-content">
                     <li><a class="menu-item" href="{{ route('products.index') }}"><i></i><span data-i18n="Invoice Summary">Product list</span></a></li>

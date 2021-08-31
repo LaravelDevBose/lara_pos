@@ -48,5 +48,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::get('/datatable/purchases', [PurchaseController::class, 'datatable'])->name('purchases.datatable');
 
     Route::resource('sells', SellController::class);
+    Route::get('customer/information/{id}', [SellController::class, 'customer_information']);
+    Route::get('product/search/{text}', [SellController::class, 'product_search']);
+
+
     Route::get('/datatable/sells', [SellController::class, 'datatable'])->name('sells.datatable');
 });

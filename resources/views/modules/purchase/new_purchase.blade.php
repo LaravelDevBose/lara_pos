@@ -19,8 +19,31 @@
             @include('layouts.includes.breadcrumb', $breadcrumbs)
 
     </div>
+
+    <div>
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                <div class="controls">
+                    <div class="form-group">
+                        <div class="controls">
+                            <label>Business Location:* <b class="font-weight-bold text-warning">*</b></label>
+                            <select class="select2 form-control " name="businessLocation_id" id="">
+                                @foreach ($businessLocations as $item)
+                                <option value="">Please Select</option>
+                                <option value="{{ $item->id }}"> {{ $item->store_name}}
+                                </option>
+                                @endforeach
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end bussiness location -->
+
     <div class="content-body">
-        <!-- users edit start -->
         <section class="users-edit">
             <div class="card">
                 <div class="card-content">
@@ -30,130 +53,123 @@
                             <!-- users edit account form start -->
 
                             <div class="row">
-                                <div class="col-sm-12 col-md-4">
-                                    <div class="form-group">
-                                        <div class="controls">
-                                            <label>Supplier: <b class="font-weight-bold text-warning">*</b></label>
-                                            <select class="select2 form-control" name="supplier_id" id="">
-                                                @foreach ($suppliers as $item)
-                                                <option value="">Please Select</option>
-                                                <option value="{{ $item->id }}"> {{ $item->first_name}} </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <div class="form-group">
-                                        <div class="controls">
-                                            <label>Reference No:</label>
-                                            <input type="text" class="form-control" name="reference_no" value="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <div class="form-group">
-                                        <label>Date <b class="font-weight-bold text-warning">*</b></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <span class="la la-calendar-o"></span>
-                                                    </span>
+                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label>Supplier: <b class="font-weight-bold text-warning">*</b></label>
+                                                <select class="select2 form-control" name="supplier_id" id="supplier_id">
+                                                    @foreach ($suppliers as $item)
+                                                    <option value="">Please Select</option>
+                                                    <option value="{{ $item->contact_id }}"> {{ $item->first_name}} </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                            <input type='text' class="form-control pickadate datepicker" placeholder="select date"
-                                                   name="expense_date"
-                                                   value="{{ !empty($expense)? $expense->date: now()->format('m/d/Y') }}"
-                                                   data-fv-notempty='true'
-                                                   data-fv-blank='true'
-                                                   data-rule-required='true'
-                                                   data-fv-notempty-message='Date Is Required'
-                                                   required
-                                            />
                                         </div>
-                                    </div>
+
+                                        <P id="details"> </P>
                                 </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <div class="form-group">
-                                        <div class="controls">
+
+                                <div class="col-sm-12 col-md-8 col-lg-8">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
                                             <div class="form-group">
                                                 <div class="controls">
-                                                    <label>Business Location:* <b class="font-weight-bold text-warning">*</b></label>
-                                                    <select class="select2 form-control" name="businessLocation_id" id="">
-                                                        @foreach ($businessLocations as $item)
-                                                        <option value="">Please Select</option>
-                                                        <option value="{{ $item->id }}"> {{ $item->store_name}}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
+                                                    <label>Reference No:</label>
+                                                    <input type="text" class="form-control" placeholder="Reference No" name="reference_no" value="">
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <div class="form-group">
-                                        <div class="controls">
+
+                                        <div class="col-sm-12 col-md-6">
                                             <div class="form-group">
-                                                <div class="controls">
-                                                    <label>Pay term: <b class="font-weight-bold text-warning">*</b></label>
-                                                    <select class="select2 form-control" name="pay_term" id="">
-                                                        <option value="">Please Select</option>
-                                                        <option value="days">Days</option>
-                                                        <option value="month">Month</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <div class="form-group">
-                                        <div class="controls">
-                                            <label for="attachment">Attach Document:  @if(!empty($product) && !empty($product->attachment)) @else <b class="font-weight-bold text-warning">*</b>@endif</label>
-                                            <div class="flex">
+                                                <label>Date <b class="font-weight-bold text-warning">*</b></label>
                                                 <div class="input-group">
-                                                    <div style="width: 100%;">
-                                                        <div class="custom-file">
-                                                            <input type="file" name="image_path" class="custom-file-input file-input"
-                                                                   id="attachment" accept="application/pdf,text/csv,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/jpg,image/png"
-                                                                   @if(empty($product) || empty($product->attachment))
-                                                                   data-fv-notempty='true'
-                                                                   data-fv-blank='true'
-                                                                   data-rule-required='true'
-                                                                   data-fv-notempty-message='Attach Document Is Required'
-                                                                   required
-                                                                   @endif
-                                                            >
-                                                            <label class="custom-file-label" for="attachment" aria-describedby="inputGroupFile02">Choose file</label>
-                                                        </div>
+                                                    <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <span class="la la-calendar-o"></span>
+                                                            </span>
                                                     </div>
-                                                    <p class="text-help text-sm mr-1 mb-0">Max File Size: 1MB</p>
-                                                    <p class="text-help text-sm mb-0">Allowed File: .pdf, .csv, .doc, .docx, .jpeg, .jpg, .png</p>
-                                                </div>
-                                                <div class="file-preview box sm">
-                                                    @if(!empty($product) && !empty($product->attachment))
-                                                    <div class="d-flex justify-content-between align-items-center ml-1 file-preview-item"
-                                                         title="{{ $product->attachment->file_original_name }}">
-                                                        <div class="align-items-center align-self-stretch d-flex justify-content-center thumb">
-                                                            <img src="{{ $product->attachment->image_path }}" class="img-fit">
-                                                        </div>
-                                                        <div class="col body">
-                                                            <h6 class="d-flex">
-                                                                <span class="text-truncate title">{{ $product->attachment->file_original_name }}</span>
-                                                                <span class="ext">{{ $product->attachment->extension }}</span>
-                                                            </h6>
-                                                            <p>{{ $product->attachment->file_size }} KB</p>
-                                                        </div>
-                                                    </div>
-                                                    @endif
+                                                    <input type='text' class="form-control pickadate datepicker" placeholder="select date"
+                                                           name="expense_date"
+                                                           value="{{ !empty($expense)? $expense->date: now()->format('m/d/Y') }}"
+                                                           data-fv-notempty='true'
+                                                           data-fv-blank='true'
+                                                           data-rule-required='true'
+                                                           data-fv-notempty-message='Date Is Required'
+                                                           required
+                                                    />
                                                 </div>
                                             </div>
-
                                         </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <label for="">Pay term:</label>
+                                            <div class="input-group form-group">
 
+                                                <input type="text" class="form-control" placeholder="Dropdown on right">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Please Select
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="#">Months</a>
+                                                        <a class="dropdown-item" href="#">Days</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                    <label for="attachment">Attach Document:  @if(!empty($product) && !empty($product->attachment)) @else <b class="font-weight-bold text-warning">*</b>@endif</label>
+                                                    <div class="flex">
+                                                        <div class="input-group">
+                                                            <div style="width: 100%;">
+                                                                <div class="custom-file">
+                                                                    <input type="file" name="image_path" class="custom-file-input file-input"
+                                                                           id="attachment" accept="application/pdf,text/csv,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/jpg,image/png"
+                                                                           @if(empty($product) || empty($product->attachment))
+                                                                           data-fv-notempty='true'
+                                                                           data-fv-blank='true'
+                                                                           data-rule-required='true'
+                                                                           data-fv-notempty-message='Attach Document Is Required'
+                                                                           required
+                                                                           @endif
+                                                                    >
+                                                                    <label class="custom-file-label" for="attachment" aria-describedby="inputGroupFile02">Choose file</label>
+                                                                </div>
+                                                            </div>
+                                                            <p class="text-help text-sm mr-1 mb-0">Max File Size: 1MB</p>
+                                                            <p class="text-help text-sm mb-0">Allowed File: .pdf, .csv, .doc, .docx, .jpeg, .jpg, .png</p>
+                                                        </div>
+                                                        <div class="file-preview box sm">
+                                                            @if(!empty($product) && !empty($product->attachment))
+                                                            <div class="d-flex justify-content-between align-items-center ml-1 file-preview-item"
+                                                                 title="{{ $product->attachment->file_original_name }}">
+                                                                <div class="align-items-center align-self-stretch d-flex justify-content-center thumb">
+                                                                    <img src="{{ $product->attachment->image_path }}" class="img-fit">
+                                                                </div>
+                                                                <div class="col body">
+                                                                    <h6 class="d-flex">
+                                                                        <span class="text-truncate title">{{ $product->attachment->file_original_name }}</span>
+                                                                        <span class="ext">{{ $product->attachment->extension }}</span>
+                                                                    </h6>
+                                                                    <p>{{ $product->attachment->file_size }} KB</p>
+                                                                </div>
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-                            </div>
+                            </div><!--end of row -->
+
+
 
 
                         </div>
@@ -166,21 +182,31 @@
         <!-- users edit ends -->
     </div>
 
-
     <div class="content-body">
         <section class="users-edit">
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <div class="col-md-7">
-                                <select class="select2 form-control">
-                                    @foreach ($products as $item)
-                                    <option value="AK">{{ $item->product_id }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-8">
+                                <fieldset>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-primary" type="button"><i class="la la-search"></i></button>
+                                        </div>
+
+                                        <input type="text" class="form-control" placeholder="Button on both side" name="search">
+
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">+</button>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                                <ul id="search_show">
+
+                                </ul>
                             </div>
-                            <a href="">Add New Product</a>
                         </div>
                         {{-- search option end --}}
 
@@ -457,7 +483,6 @@
         </section>
     </div>
     <!--end shipping -->
-
     <div class="card">
         <div class="card-content">
             <div class="card-body">
@@ -635,16 +660,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
 </div>
 @endsection
 
@@ -653,7 +668,58 @@
 <script src="{{ asset('assets/vendors/js/pickers/pickadate/picker.js') }}"></script>
 <script src="{{ asset('assets/vendors/js/pickers/pickadate/picker.date.js') }}"></script>
 <!-- END: Page Vendor JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
 <script>
+
+$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+        $('select[name="supplier_id"]').on('change', function(){
+               var supplier_id = $(this).val();
+               if(supplier_id){
+                $.ajax({
+                    url:'/customer/information/'+supplier_id,
+                    type:'GET',
+                    dataType:"Json",
+                    success:function(data){
+                      $('#details').append('<h3>Billing Address:</h3> <span> '+ data.state +', '+ data.city +', '+ data.country +' </span> ')
+                    }
+                })
+               }
+        });
+
+
+        // sarch
+
+        $('input[name="search"]').on("keyup", function(){
+               var search_key = $(this).val();
+
+               if( search_key){
+                $.ajax({
+                    url:'/product/search/'+search_key,
+                    type:'GET',
+                    dataType:"Json",
+
+                    success:function(data){
+                    $('#search_show').html('')
+                     data.forEach(element => {
+                        $('#search_show').append('<li>'+ element.short_description +'</li>')
+                     });
+                    }
+                })
+               }
+        });
+
+
+
+
+
+
+
 
     $(document).ready(function() {
         $('.birthdate-picker').pickadate({
@@ -680,6 +746,17 @@
         })
     });
 
+
+    // auto search
+    var path = "{{ url('Product/search/query') }}";
+    $('input.typeahead').typeahead({
+        source: function (query, process) {
+            return $.get(path, {query: query}, function (data) {
+                alert(data)
+                return process(data);
+            });
+        }
+    });
 </script>
 @endsection
 {{-- /*
