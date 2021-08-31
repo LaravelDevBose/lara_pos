@@ -28,16 +28,4 @@ class SellController extends Controller
         $customers = Contact::OnlyCustomer()->get();
         return view('modules.sell.new_sell',compact('businessLocations','paymentMethods','customers'));
     }
-
-    public function customer_information($id)
-    {
-        $customer = Contact::where('contact_id', $id)->first();
-        return response()->json($customer, 200);
-    }
-
-    public function product_search($text)
-    {
-       $data = Product::where("short_description", "LIKE", "%{$text}%")->get();
-        return response()->json($data, 200);
-    }
 }

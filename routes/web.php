@@ -13,6 +13,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Purchase\PurchaseController;
 use App\Http\Controllers\Sell\SellController;
+use App\Http\Controllers\Sell\PosController;
 
 
 Route::get('/', function () {
@@ -48,11 +49,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::get('/datatable/purchases', [PurchaseController::class, 'datatable'])->name('purchases.datatable');
 
     Route::resource('sells', SellController::class);
-    Route::get('customer/information/{id}', [SellController::class, 'customer_information']);
-    Route::get('product/search/{text}', [SellController::class, 'product_search']);
-
-
     Route::get('/datatable/sells', [SellController::class, 'datatable'])->name('sells.datatable');
+    Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
 
     Route::group(['prefix'=>'ajax', 'as'=>'ajax.'], function (){
         Route::get('/product-list', [ProductController::class, 'ajax_get_products'])->name('get.products');

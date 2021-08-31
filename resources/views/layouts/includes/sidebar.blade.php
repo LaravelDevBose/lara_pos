@@ -28,9 +28,9 @@
 
             <li class=" nav-item"><a href="#"><i class="la la-cart-plus"></i><span class="menu-title" data-i18n="Invoice">Sell</span></a>
                 <ul class="menu-content">
-                    <li><a class="menu-item" href="{{ route('purchases.index') }}"><i></i><span data-i18n="Invoice Summary">Sell list</span></a></li>
+                    <li><a class="menu-item" href="{{ route('sells.index') }}"><i></i><span data-i18n="Invoice Summary">Sell list</span></a></li>
                     <li><a class="menu-item" href="{{ route('sells.create') }}"><i></i><span data-i18n="Invoice Template">Add Sell</span></a></li>
-                    <li><a class="menu-item" href="{{ route('brand.index') }}"><i></i><span data-i18n="Invoice List">Sell Return</span></a></li>
+                    <li><a class="menu-item" href="{{ route('pos.index') }}"><i></i><span data-i18n="Invoice List">Pos</span></a></li>
                 </ul>
             </li>
 
