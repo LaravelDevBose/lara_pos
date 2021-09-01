@@ -301,3 +301,4 @@ class ProductController extends Controller
         return ResponseTrait::SingleResponse($products, 'success', Response::HTTP_OK);
     }
 }
+ 
