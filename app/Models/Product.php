@@ -64,10 +64,22 @@ class Product extends Model
 
     public function scopeSearchBy($query, $request)
     {
-        $search_key = $request->search_key;
-        $query = $query->where('product_reference', 'like', '%'.$search_key.'%')
+
+        if (!empty($request->category_id)){
+            $query = $query->where('category_id', $request->category_id);
+        }
+
+        if(!empty($request->brand_id)){
+            $query = $query->where('brand_id', $request->brand_id);
+        }
+
+        if(!empty($request->search_key)){
+            $search_key = $request->search_key;
+            $query = $query->where('product_reference', 'like', '%'.$search_key.'%')
                 ->orWhere('short_description', 'like', '%'. $search_key.'%')
-            ->orderByRaw("IF('product_reference' = '{$search_key}',2,IF(product_reference LIKE '%{$search_key}%',1,0)) DESC, length(product_reference)");
+                ->orderByRaw("IF('product_reference' = '{$search_key}',2,IF(product_reference LIKE '%{$search_key}%',1,0)) DESC, length(product_reference)");
+        }
+
 
         return $query;
     }

@@ -7,10 +7,7 @@
                     <span class="menu-title" data-i18n="eCommerce Dashboard">{{ auth()->user()->role_name }} Dashboard</span>
                 </a>
             </li>
-            <li class=" navigation-header">
-                <span data-i18n="Ecommerce">Ecommerce</span>
-                <i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Ecommerce"></i>
-            </li>
+
 {{--            <li class=" nav-item">--}}
 {{--                <a href="ecommerce-product-shop.html">--}}
 {{--                    <i class="la la-th-large"></i>--}}

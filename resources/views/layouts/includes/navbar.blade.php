@@ -6,7 +6,15 @@
                 <li class="nav-item mr-auto">
                     <a class="navbar-brand" href="{{ route('dashboard') }}">
                         <h3 class="brand-text">Lara POS</h3>
-                    </a></li>
+                    </a>
+                </li>
+                @if(!request()->routeIs('pos.index'))
+                <li class="nav-item">
+                    <a class="nav-link pr-0" href="{{ route('dashboard') }}" style="padding: 20px 0;">
+                        <i class="la la-home" style="font-size: 2rem; color: #f1f1f1;"></i>
+                    </a>
+                </li>
+                @else
                 <li class="nav-item d-none d-lg-block nav-toggle">
                     <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
                         <i class="toggle-icon ft-toggle-right font-medium-3 white" data-ticon="ft-toggle-right"></i>
@@ -17,12 +25,16 @@
                         <i class="la la-ellipsis-v"></i>
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
         <div class="navbar-container content">
             <div class="collapse navbar-collapse" id="navbar-mobile">
                 <ul class="nav navbar-nav mr-auto float-left">
                     <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
+                    <li class="nav-item d-lg-block">
+                        <a class="nav-link" href="{{ route('dashboard') }}"><i class="la la-home" style="font-size: 1.7rem;"></i></a>
+                    </li>
                     <li class="dropdown nav-item mega-dropdown d-none d-lg-block"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown">Mega</a>
                         <ul class="mega-dropdown-menu dropdown-menu row p-1">
                             <li class="col-md-4 bg-mega p-2">

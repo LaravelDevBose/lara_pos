@@ -603,3 +603,26 @@ button.close {
 .hidden{
     display: none;
 }
+
+#BCS_products div.ex1 {
+    height: 490px;
+    width: 100%;
+    overflow-y: auto;
+}
+.product-list{
+    padding: 5px;
+}
+.product-list .product-img{
+    height: 5rem;
+    width: 60%;
+    padding-top: .5rem;
+    margin: 0 auto;
+}
+#BCS_loader{
+    padding-top: 20vh;
+    text-align: center;
+}
+#BCS_loader .spinner{
+    color: #666ee8;
+    font-size: 5rem;
+}

@@ -29,22 +29,26 @@
 
         <!-- BEGIN: Custom CSS-->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bcs-core.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('formValidation/css/formValidation.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bcs-core.css') }}">
         <!-- END: Custom CSS-->
 
 
     </head>
+    @if(request()->routeIs('pos.index'))
+    <body class="horizontal-layout horizontal-menu 2-columns  " data-open="hover" data-menu="horizontal-menu" data-col="2-columns">
+    @else
     <body class="vertical-layout vertical-menu-modern 2-columns fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+    @endif
 
     <!-- BEGIN: Header-->
         @include('layouts.includes.navbar')
     <!-- END: Header-->
 
     <!-- BEGIN: Main Menu-->
-
+    @if(!request()->routeIs('pos.index'))
         @include('layouts.includes.sidebar')
-
+    @endif
     <!-- END: Main Menu-->
     <!-- BEGIN: Content-->
     <div class="app-content content">

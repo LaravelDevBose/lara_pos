@@ -12,7 +12,7 @@ class PosController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::isActive()->onlyParents()->with('children')->get();
         $brands = Brand::all();
         $customers = Contact::OnlyCustomer()->get();
         return view('modules.sell.pos_sell_page', compact('customers','categories','brands'));
