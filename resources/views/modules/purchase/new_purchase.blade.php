@@ -46,7 +46,7 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Supplier: <b class="font-weight-bold text-warning">*</b></label>
-                                                <select class="select2 form-control" name="supplier_id" id="supplier_id">
+                                                <select class="select2 form-control" name="contact_id" id="contact_id">
                                                     @foreach ($suppliers as $item)
                                                         <option value="">Please Select</option>
                                                         <option value="{{ $item->contact_id }}"> {{ $item->first_name}} </option>
@@ -155,8 +155,7 @@
                                     </div>
                                 </div>
                                 {{-- search option end --}}
-
-                                <div class="table-responsive my-2">
+                                <div id="products" class="table-responsive my-2">
                                     <table class="table">
                                         <thead>
                                         <tr>
@@ -175,25 +174,18 @@
                                             <th>Action</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
+                                        <tbody id="product_show">
+                                        <tr >
+
                                         </tr>
 
                                         </tbody>
                                     </table>
+                                    <hr>
+                                    <div class="float-right">
+                                        <p>Total Items: 0.00</p>
+                                        <p id="amount">Net Total Amount: </p>
+                                    </div>
                                 </div>
                                 {{-- product show end --}}
                             </div>
@@ -223,14 +215,14 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Discount Amount:</label>
-                                                <input type="number" class="form-control" name="discrount_amount" value="0">
+                                                <input id="discount_amount_value" type="number" class="form-control" name="discount_amount">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <div class="form-group">
                                             <div class="controls mt-3 float-right">
-                                                <span>Discount:(-) $ 0.00</span>
+                                                <span id="discount_amount_show">Discount:(-) $ 0.00</span>
                                             </div>
                                         </div>
                                     </div>
@@ -592,7 +584,33 @@
                 $('#bankInfo').show();
             }
         });
+
+        $('.BCS-product-data-ajax').on('select2:select', function (e) {
+            var data = e.params.data;
+                $('#product_show').append(' <tr> <td>'+ data.product_id +'</td>    <td>'+ data.product_name +'</td>   <td> <input type="text" value="1"> </td>  <td>'+data.unit_id+'</td>  <td><input type="number" value="0"></td>  <td>'+data.unit_id+'</td>  <td>0</td>  <td>0</td>  <td>0</td>  <td>0</td>  <td>'+data.profit_margin+'</td>  <td>'+ data.unit_id +'</td>  <td> <a class="btn btn-sm btn-danger" href="">X</a> </td>  </tr>')
+                    $(this).val(null).trigger('change');
+        });
     });
+
+    //supplier and customer information show for purchase and sell page
+    $('select[name="contact_id"]').on('change', function(){
+        var contact_id = $(this).val()
+        if(contact_id){
+            $.ajax({
+                url:'/contact/details/'+contact_id,
+                type:'GET',
+                dataType:'json',
+                success:function(data){
+                    $('#details').append('<p> <h4>Information</h4> <br> '+ data.city +' </p>')
+                }
+            })
+        }
+    })
+
+
+
+
+
 </script>
 @endsection
 {{-- /*

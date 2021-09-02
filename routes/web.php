@@ -30,6 +30,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::resource('/expanse-heads', ExpanseHeadController::class)->except('create', 'show')->names('expanse_heads');
 
     Route::resource('/contacts', ContactController::class);
+    Route::get('/contact/details/{id}', [ContactController::class, 'details']);
     Route::get('/datatable/contacts', [ContactController::class, 'datatable'])->name('contacts.datatable');
 
     Route::resource('/bank-accounts', BankAccountController::class)->names('bank_accounts');
@@ -43,6 +44,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::post('store/transaction', [TransactionController::class, 'store'])->name('store.transactions');
 
     Route::resource('products', ProductController::class);
+    Route::get('/purchase/product/{id}', [ProductController::class, 'purchase_product']);
     Route::get('/datatable/products', [ProductController::class, 'datatable'])->name('products.datatable');
 
     Route::resource('purchases', PurchaseController::class);

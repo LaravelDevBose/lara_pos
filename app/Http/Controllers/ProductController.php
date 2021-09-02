@@ -297,8 +297,17 @@ class ProductController extends Controller
 
     public function ajax_get_products(Request $request)
     {
+        // return response()->json($request->all());
         $products = Product::query()->isActive()->searchBy($request)
             ->with('attachment')->get();
         return ResponseTrait::SingleResponse($products, 'success', Response::HTTP_OK);
+    }
+
+    //product show on purchase page
+    public function purchase_product($id)
+    {
+
+        $product = Product::query()->Purchase($id);
+        return response()->json($product, 200);
     }
 }

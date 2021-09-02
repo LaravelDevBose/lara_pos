@@ -19,11 +19,10 @@
             'sell List' => route('sells.index'),
             'Purchese Create' => 'Add new Sells'
         ];
-
         ?>
         @include('layouts.includes.breadcrumb', $breadcrumbs)
-
     </div>
+
     <!--start here sell-->
     <div class="content-body">
         <div class="row">
@@ -50,7 +49,7 @@
                                     <div class="form-group">
                                         <label>Customers:<b class="font-weight-bold text-warning">*</b></label>
                                         <div class="input-group">
-                                            <select class="select2 form-control " name="customer_id" id="customer_id">
+                                            <select class="select2 form-control " name="contact_id" id="contact_id">
                                                 @foreach ($customers as $item)
                                                     <option value="">Please Select</option>
                                                     <option value="{{ $item->contact_id }}"> {{ $item->first_name}}
@@ -63,11 +62,6 @@
                                         </div>
                                     </div>
                                     <p id="details">
-                                        asdfasdf
-                                        asdf
-                                        basdfasdf
-                                        asfasfsadf
-                                        asdfasdf
                                     </p>
                                 </div>
                                 <div class="col-sm-12 col-md-8">
@@ -189,21 +183,9 @@
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">test</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                    </tr>
-
+                                    <tbody id="product_show">
                                     </tbody>
                                 </table>
-
                                 <div class="float-right">
                                     <p> <span>Items: 0.00</span> <span> Total: 0.00
                                     </span> </p>
@@ -294,7 +276,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
@@ -313,7 +294,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-sm-12 col-md-4">
                                     <div class="form-group">
                                         <div class="controls">
@@ -326,7 +306,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-sm-12 col-md-4">
                                     <div class="form-group">
                                         <div class="controls">
@@ -336,7 +315,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-sm-12 col-md-4">
                                     <div class="form-group">
                                         <div class="controls">
@@ -350,23 +328,19 @@
                                                         <option value="">Quotation </option>
                                                         <option value="">Proforma </option>
                                                     </select>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-sm-12 col-md-4">
                                     <div class="form-group">
                                         <div class="controls">
                                             <label>Delivered To:</label>
                                             <input type="test" class="form-control" name="" placeholder="Delivered To" value="">
-
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-sm-12 col-md-4">
                                     <div class="form-group">
                                         <div class="controls">
@@ -409,9 +383,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -580,7 +552,28 @@
                 $('#bankInfo').show();
             }
         });
+
+        $('.BCS-product-data-ajax').on('select2:select', function (e) {
+            var data = e.params.data;
+                $('#product_show').append(' <tr> <td>'+ data.product_name +'</td>    <td>1</td>   <td> 0 </td> <td> 0 </td> <td> 0 </td>  <td>0</td>  <td>0</td>   <td> <a class="btn btn-sm btn-danger" href="">X</a> </td>  </tr>')
+                    $(this).val(null).trigger('change');
+        });
     });
+
+    //supplier and customer information show for purchase and sell page
+    $('select[name="contact_id"]').on('change', function(){
+        var contact_id = $(this).val()
+        if(contact_id){
+            $.ajax({
+                url:'/contact/details/'+contact_id,
+                type:'GET',
+                dataType:'json',
+                success:function(data){
+                    $('#details').append('<p> <h4>Information</h4> <br> '+ data.city +' </p>')
+                }
+            })
+        }
+    })
 </script>
 @endsection
 {{-- /*

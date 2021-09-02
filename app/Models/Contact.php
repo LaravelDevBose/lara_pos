@@ -120,4 +120,10 @@ class Contact extends Model
         return $this->hasMany(Purchase::class, 'supplier_id', 'contact_id');
     }
 
+    //supplier and customer information show for purchase and sell page
+    public function scopeDetails($q, $id)
+    {
+        return $q->where('contact_id', $id)->first();
+    }
+
 }

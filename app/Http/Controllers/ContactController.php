@@ -207,4 +207,10 @@ class ContactController extends Controller
             return ResponseTrait::AllResponse('error', Response::HTTP_BAD_REQUEST, $ex->getMessage());
         }
     }
+    //supplier and customer information show for purchase and sell page
+    public function details($id)
+    {
+        $details = Contact::query()->Details($id);
+        return response()->json($details, 200);
+    }
 }

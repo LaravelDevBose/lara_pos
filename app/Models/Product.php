@@ -75,12 +75,11 @@ class Product extends Model
 
         if(!empty($request->search_key)){
             $search_key = $request->search_key;
+            // dd($search_key);
             $query = $query->where('product_reference', 'like', '%'.$search_key.'%')
-                ->orWhere('short_description', 'like', '%'. $search_key.'%')
-                ->orderByRaw("IF('product_reference' = '{$search_key}',2,IF(product_reference LIKE '%{$search_key}%',1,0)) DESC, length(product_reference)");
+                ->orWhere('short_description', 'like', '%'. $search_key.'%');
+                // ->orderByRaw("IF('product_reference' = '{$search_key}',2,IF(product_reference LIKE '%{$search_key}%',1,0)) DESC, length(product_reference)");
         }
-
-
         return $query;
     }
 
@@ -122,5 +121,11 @@ class Product extends Model
     public function sell_items()
     {
         return $this->hasMany(SellItem::class, 'product_id', 'product_id');
+    }
+
+    //product show on purchase page
+    public function scopePurchase($q, $id)
+    {
+        return $q->where('product_id', $id)->first();
     }
 }
