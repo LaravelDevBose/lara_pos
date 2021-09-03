@@ -9,12 +9,6 @@
                     </a>
                 </li>
                 @if(!request()->routeIs('pos.index'))
-                <li class="nav-item">
-                    <a class="nav-link pr-0" href="{{ route('dashboard') }}" style="padding: 20px 0;">
-                        <i class="la la-home" style="font-size: 2rem; color: #f1f1f1;"></i>
-                    </a>
-                </li>
-                @else
                 <li class="nav-item d-none d-lg-block nav-toggle">
                     <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
                         <i class="toggle-icon ft-toggle-right font-medium-3 white" data-ticon="ft-toggle-right"></i>

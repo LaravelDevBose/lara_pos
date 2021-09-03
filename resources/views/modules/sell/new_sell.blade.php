@@ -163,13 +163,13 @@
                                             <div class="input-group-prepend">
                                                 <button class="btn btn-primary" type="button"><i class="la la-search"></i></button>
                                             </div>
-                                            <select class="form-control BCS-product-data-ajax" id="select2-ajax"></select>
+                                            <select class="form-control BCS-product-data-ajax BCS-product-sell" id="select2-ajax"></select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="my-3">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th scope="col">Product</th>
@@ -187,8 +187,10 @@
                                     </tbody>
                                 </table>
                                 <div class="float-right">
-                                    <p> <span>Items: 0.00</span> <span> Total: 0.00
-                                    </span> </p>
+                                    <p>
+                                        <span>Items: 0.00</span>
+                                        <span> Total: 0.00 </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -276,6 +278,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
