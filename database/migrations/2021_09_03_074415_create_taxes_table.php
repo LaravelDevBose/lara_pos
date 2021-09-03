@@ -16,7 +16,7 @@ class CreateTaxesTable extends Migration
         Schema::create('taxes', function (Blueprint $table) {
             $table->id('tax_id');
             $table->string('tax_title');
-            $table->string('tax_percent');
+            $table->boolean('tax_percent');
             $table->boolean('status')->default(config('constant.active'));
             $table->timestamps();
             $table->softDeletes();

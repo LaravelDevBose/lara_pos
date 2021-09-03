@@ -15,12 +15,12 @@ class BusinessLocationController extends Controller
     public function index(Request $request)
     {
         $locations = BusinessLocation::notDelete()->latest()->get();
-        return view('modules.business_location.index', compact('locations'));
+        return view('modules.setting.business_location.index', compact('locations'));
     }
 
     public function create(Request $request)
     {
-        return view('modules.business_location.create_update');
+        return view('modules.setting.business_location.create_update');
     }
 
     /**
@@ -70,7 +70,7 @@ class BusinessLocationController extends Controller
     public function edit($id)
     {
         $location = BusinessLocation::findOrFail($id);
-        return view('modules.business_location.create_update', compact('location'));
+        return view('modules.setting.business_location.create_update', compact('location'));
     }
 
     /**
