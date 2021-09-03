@@ -7,7 +7,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ExpanseHeadController;
 use App\Http\Controllers\BankAccountController;
-use App\Http\Controllers\BusinessLocationController;
+use App\Http\Controllers\Setting\BusinessLocationController;
+use App\Http\Controllers\Setting\UnitController;
+use App\Http\Controllers\Setting\TaxController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
@@ -34,7 +36,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::get('/datatable/contacts', [ContactController::class, 'datatable'])->name('contacts.datatable');
 
     Route::resource('/bank-accounts', BankAccountController::class)->names('bank_accounts');
-    Route::resource('/business-locations', BusinessLocationController::class)->names('business_locations');
+
 
     Route::resource('/expenses', ExpenseController::class)->except('show');
     Route::get('/datatable/expenses', [ExpenseController::class, 'datatable'])->name('expenses.datatable');
@@ -57,4 +59,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::group(['prefix'=>'ajax', 'as'=>'ajax.'], function (){
         Route::get('/product-list', [ProductController::class, 'ajax_get_products'])->name('get.products');
     });
+
+    Route::resource('/business-locations', BusinessLocationController::class)->names('business_locations');
+    Route::resource('/unites', UnitController::class)->except('create', 'show');
+    Route::resource('/taxes', TaxController::class)->except('create', 'show');
 });

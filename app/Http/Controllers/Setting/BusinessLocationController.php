@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Setting;
 
+use App\Http\Controllers\Controller;
 use App\Models\BusinessLocation;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;

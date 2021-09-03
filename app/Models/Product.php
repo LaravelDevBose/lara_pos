@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasAttachmentTrait;
 use App\Traits\HasFilter;
 use App\Traits\StockManagementTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -34,17 +35,19 @@ class Product extends Model
     protected $fillable=[
         'category_id',
         'brand_id',
-        'barcode',
+        'product_code',
         'product_name',
-        'product_reference',
+        'product_sku',
+        'barcode',
         'unit_id',
+        'alert_qty',
         'short_description',
-        'long_description',
-        'profit_margin',
-        'product_tva',
-        'min_stock',
-        'max_stock',
+        'tax_id',
         'product_type',
+        'product_dpp',
+        'product_dpp_inc_tax',
+        'profit_percent',
+        'product_dsp',
         'status'
     ];
 
@@ -81,6 +84,20 @@ class Product extends Model
                 // ->orderByRaw("IF('product_reference' = '{$search_key}',2,IF(product_reference LIKE '%{$search_key}%',1,0)) DESC, length(product_reference)");
         }
         return $query;
+    }
+
+    public static function getCode()
+    {
+        $last = self::latest()->first();
+        if(empty($last)){
+            return 'PI00001';
+        }else{
+            $code = 'PI';
+            for($i = (5- count($last->product_id)); $i < 5; $i++){
+                $code .='0';
+            }
+            return $code;
+        }
     }
 
     public function category()
@@ -123,9 +140,13 @@ class Product extends Model
         return $this->hasMany(SellItem::class, 'product_id', 'product_id');
     }
 
-    //product show on purchase page
-    public function scopePurchase($q, $id)
+    public function unit()
     {
-        return $q->where('product_id', $id)->first();
+        return $this->belongsTo(Unit::class, 'unit_id', 'unit_id');
+    }
+
+    public function tax()
+    {
+        return $this->belongsTo(Tax::class, 'tax_id', 'tax_id');
     }
 }

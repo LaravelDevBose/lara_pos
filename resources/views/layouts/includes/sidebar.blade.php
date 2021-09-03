@@ -89,6 +89,16 @@
                             <span>Business Locations</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="menu-item" href="{{ route('unites.index') }}">
+                            <span>Units</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="menu-item" href="{{ route('taxes.index') }}">
+                            <span>Tax</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
