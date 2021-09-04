@@ -88,7 +88,7 @@ class CategoryController extends Controller
                 if (empty($category)) {
                     throw new \Exception('Invalid Category Information');
                 }
-                $categoryU = $category->update([
+                $category = $category->update([
                     'category_name' => $request->category_name,
                     'parent_id'=> !empty($request->parent_id)? $request->parent_id: null,
                     'status' => !empty($request->get('status')) ? $request->status : config('constant.inactive')

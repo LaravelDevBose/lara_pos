@@ -12,7 +12,7 @@ class Tax extends Model
     use HasFactory;
     use SoftDeletes;
     use HasFilter;
-
+ 
     protected $table='taxes';
     protected $primaryKey='tax_id';
 

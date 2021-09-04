@@ -90,7 +90,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="menu-item" href="{{ route('unites.index') }}">
+                        <a class="menu-item" href="{{ route('units.index') }}">
                             <span>Units</span>
                         </a>
                     </li>

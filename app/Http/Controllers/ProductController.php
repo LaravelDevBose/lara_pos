@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tax;
+use App\Models\Unit;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -55,9 +57,11 @@ class ProductController extends Controller
         }])->get();
 
         $brands = Brand::isActive()->latest()->pluck('brand_name', 'brand_id');
+        $unites = Unit::isActive()->latest()->get(['unit_name', 'unit_id']);
+        $taxes = Tax::isActive()->latest()->get(['tax_title', 'tax_id']);
         $types = array_flip(Product::TYPES);
-        $existProducts = Product::isActive()->latest()->pluck('product_reference', 'product_id');
-        return view('modules.product.create_update', compact('categories', 'brands', 'types', 'existProducts'));
+        $existProducts = Product::isActive()->latest()->pluck('product_id');
+        return view('modules.product.create_update', compact('categories', 'brands', 'types', 'existProducts','unites','taxes'));
     }
 
     public function store(Request $request)

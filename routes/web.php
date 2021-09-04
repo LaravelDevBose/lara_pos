@@ -61,6 +61,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     });
 
     Route::resource('/business-locations', BusinessLocationController::class)->names('business_locations');
-    Route::resource('/unites', UnitController::class)->except('create', 'show');
-    Route::resource('/taxes', TaxController::class)->except('create', 'show');
+    Route::resource('/units', UnitController::class)->except('create', 'show');
+    Route::resource('/taxes', TaxController::class)->name('create', 'show');
 });
