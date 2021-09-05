@@ -43,18 +43,27 @@
                                         <tr>
                                             <th class="text-center">Actions</th>
                                             <th>Image</th>
-                                            <th>Reference</th>
+                                            <th>Product Name</th>
                                             <th>Description</th>
                                             <th>Category</th>
                                             <th>Brand</th>
-                                            <th>TVA</th>
-                                            <th class="text-right">Min Stock</th>
-                                            <th class="text-right">Max Stock</th>
+                                            <th>Alert Quantity</th>
                                             <th>Product Type</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-
+                                            @foreach ($products as $product)
+                                                <tr>
+                                                    <td><a href="">edit</a></td>
+                                                    <td>{{ $product->product_name }}</td>
+                                                    <td>{{ $product->product_name }}</td>
+                                                    <td>{{ $product->short_description }}</td>
+                                                    <td>{{ $product->category->category_name }}</td>
+                                                    <td>{{ $product->brand->brand_name }}</td>
+                                                    <td>{{ $product->alert_qty }}</td>
+                                                    <td>{{ $product->product_type }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

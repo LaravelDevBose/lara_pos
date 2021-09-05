@@ -43,7 +43,7 @@
                                             <div class="controls">
                                                 <label>Product Name <b class="font-weight-bold text-warning">*</b></label>
                                                 <input type="text" class="form-control"
-                                                       name="Product_name"
+                                                       name="product_name"
                                                        value="{{ !empty($product)? $product->product_name: '' }}"
                                                        placeholder="Product Name"
                                                        data-fv-notempty='true'
@@ -184,14 +184,14 @@
                                                     <div class="form-group">
                                                         <div class="controls">
                                                             <label>Alert Qty <b class="font-weight-bold text-warning">*</b></label>
-                                                            <input type="text" class="form-control"
-                                                                   name="product_sku"
+                                                            <input type="number" class="form-control"
+                                                                   name="alert_qty"
                                                                    value="{{ !empty($product)? $product->alert_qty: '' }}"
                                                                    placeholder="Alert Qty"
                                                                    data-fv-notempty='true'
                                                                    data-fv-blank='true'
                                                                    data-rule-required='true'
-                                                                   data-fv-notempty-message='Alert Qty SKU Is Required'
+                                                                   data-fv-notempty-message='Alert Qty Is Required'
                                                                    required
                                                             >
                                                         </div>
@@ -257,19 +257,22 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Taxes <b class="font-weight-bold text-warning">*</b></label>
-                                                <select class="select2 form-control" name="tax_id"
+                                                <select class="select2 form-control" id="tax_id" name="tax_id"
                                                         data-fv-notempty='true'
                                                         data-fv-blank='true'
                                                         data-rule-required='true'
                                                         data-fv-notempty-message='Tax Id Is Required'
                                                         required
                                                 >
-                                                    <option value=" ">Select a Taxes</option>
-                                                    @if(!empty($taxes) && count($taxes) > 0)
+                                                    <option value="">Select a Taxes</option>
+                                                    <option value="20">vat @20%</option>
+                                                    <option value="10">vat @10%</option>
+                                                    <option value="5">vat @5%</option>
+                                                    {{-- @if(!empty($taxes) && count($taxes) > 0)
                                                         @foreach($taxes as $tax)
                                                             <option value="{{ $tax->tax_id }}" {{ !empty($product) && $product->tax_id==$tax->tax_id ? 'selected': '' }}>{{ $unit->unit_name }}</option>
                                                         @endforeach
-                                                    @endif
+                                                    @endif --}}
                                                 </select>
                                             </div>
                                         </div>
@@ -296,37 +299,79 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-8" id="comboBlock" style="display: {{ !empty($product)&& $product->product_type == \App\Models\Product::TYPES['Combo']? 'block': 'none' }};">
+                                    <div class="col-sm-12 col-md-12" id="comboBlock" style="display: {{ !empty($product)&& $product->product_type == \App\Models\Product::TYPES['Combo']? 'block': 'none' }};">
                                         <div class="form-group">
-                                            <div class="controls">
-                                                <label>Select Combo Products</label>
-                                                <select class="select2 form-control" multiple name="combo_products[]"
-                                                >
-                                                    <option value=" ">Select a Products</option>
-                                                    @if(!empty($existProducts) && count($existProducts) > 0)
-                                                        @foreach($existProducts as $id => $name)
-                                                            <option value="{{ $id }}" {{ (!empty($product) && in_array($id, $product->combo_products()->pluck('comb_prod_id')->toArray())) ? 'selected': '' }}>{{ $name }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <button class="btn btn-primary" type="button"><i class="la la-search"></i></button>
+                                                            </div>
+                                                            <select class="form-control BCS-product-data-ajax BCS-product-sell" id="select2-ajax"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-
                                         </div>
+                                        <div class="">
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Product Name</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Purchase Price (Excluding Tax)</th>
+                                                    <th scope="col">Total Amount (Exc. Tax)</th>
+                                                    <th scope="col">X</th>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="product_show">
+                                                </tbody>
+                                            </table>
+                                            <div class="float-right">
+                                                <p>
+                                                    <span> Net Total Amount: 0.00 </span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row my-5">
+                                            <div class="col-sm-12 col-md-6 col-lg-6">
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                                        <label for="">x Margin(%):</label>
+                                                        <input type="number" step="0.01" class="form-control" name="" value="25.00" id="">
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                                        <label for="">Default Selling Price:</label>
+                                                        <input type="number" step="0.01" class="form-control" name="" value="0.00" id="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-3">
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Default Purchase Price <b class="font-weight-bold text-warning">*</b></label>
-                                                <input type="text" class="form-control"
+                                                <input type="number" class="form-control"
                                                        name="product_dpp"
+                                                       id="dpp"
                                                        value="{{ !empty($product)? $product->product_dpp: '' }}"
-                                                       placeholder="Product Dpp"
+                                                       placeholder="Default Purchase Price"
                                                        data-fv-notempty='true'
                                                        data-fv-blank='true'
                                                        data-rule-required='true'
                                                        data-fv-notempty-message='Product Dpp Is Required'
+                                                       step="0.01"
                                                        required
                                                 >
                                             </div>
@@ -334,16 +379,18 @@
                                     </div>
                                     <div class="col-sm-12 col-md-3">
                                         <div class="form-group">
-                                            <div class="controls">
+                                            <div class="controls dppt">
                                                 <label>Default Purchase Price Inc Tax <b class="font-weight-bold text-warning">*</b></label>
-                                                <input type="text" class="form-control"
+                                                <input type="number" class="form-control"
+                                                       id="dpp_inc_tax"
                                                        name="product_dpp_inc_tax"
                                                        value="{{ !empty($product)? $product->product_dpp_inc_tax: '' }}"
-                                                       placeholder="Product Dpp Inc Tax"
+                                                       placeholder="Default Purchase Price Inc Tax"
                                                        data-fv-notempty='true'
                                                        data-fv-blank='true'
                                                        data-rule-required='true'
                                                        data-fv-notempty-message='Product Dpp Inc Tax Is Required'
+                                                       step="0.01"
                                                        required
                                                 >
                                             </div>
@@ -354,12 +401,14 @@
                                             <div class="controls">
                                                 <label>Profit Percent <b class="font-weight-bold text-warning">*</b></label>
                                                 <input type="text" class="form-control"
+                                                       id="profit_parcent"
                                                        name="profit_percent"
                                                        value="{{ !empty($product)? $product->profit_percent: '' }}"
                                                        placeholder="Profit Percent"
                                                        data-fv-notempty='true'
                                                        data-fv-blank='true'
                                                        data-rule-required='true'
+                                                       value="25"
                                                        data-fv-notempty-message='Profit Percent Is Required'
                                                        required
                                                 >
@@ -370,14 +419,16 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Default Selling Price <b class="font-weight-bold text-warning">*</b></label>
-                                                <input type="text" class="form-control"
+                                                <input type="number" class="form-control"
                                                     name="product_dsp"
+                                                    id="selling_price"
                                                     value="{{ !empty($product)? $product->product_dsp: '' }}"
-                                                    placeholder="product_dsp"
+                                                    placeholder="Default Selling Price"
                                                     data-fv-notempty='true'
                                                     data-fv-blank='true'
                                                     data-rule-required='true'
                                                     data-fv-notempty-message='Product Dsp Is Required'
+                                                    step="0.01"
                                                     required
                                                 >
                                             </div>
@@ -428,6 +479,7 @@
 
 @section('pageJs')
     <script>
+        var tax =''
         $(document).ready(function () {
             $('#product_type').on('change', function (e) {
                 $('#comboBlock').hide();
@@ -435,9 +487,33 @@
                     $('#comboBlock').show();
                 }
             });
+
+            $('#tax_id').on('change',function(e){
+                var tax = e.target.value
+                $('#dpp').on('input', function(e){
+                    var dpp = e.target.value;
+                    var dppt = parseInt(tax) / parseInt(dpp) * 100 ;
+                    $('#dpp_inc_tax').val(dppt)
+
+                    $('#profit_parcent').on('input',function(e){
+                        var profit_parcent = e.target.value
+                        var sell = parseInt(profit_parcent) / parseInt(tax) * 100 ;
+                        $('#selling_price').val(sell)
+                    })
+                })
+            })//end dpp and dpp_inc_tax
         });
 
+        $('.BCS-product-data-ajax').on('select2:select', function (e) {
+            var data = e.params.data;
+            console.log(data)
+                $('#product_show').append(' <tr> <td>'+ data.product_name +'</td>    <td><input type="number" value="1"></td>   <td> '+data.product_dpp+' </td> <td> '+ data.product_dpp*1 +' </td> <td> <a class="btn btn-sm btn-danger" href="">X</a> </td>  </tr>')
+                    $(this).val(null).trigger('change');
+        });
+
+
     </script>
+
 @endsection
 {{-- /*
 * Author: Arup Kumer Bose

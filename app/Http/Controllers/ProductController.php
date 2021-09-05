@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
+
 class ProductController extends Controller
 {
     public function index(){
-        return view('modules.product.index');
+        $products = Product::all();
+        return view('modules.product.index', compact('poducts'));
     }
 
     public function datatable(Request $request)
@@ -67,36 +69,42 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
+
         $rules = [
+            'product_name' => ['required', 'string'],
+            'product_sku' => ['required', 'string'],
+            'barcode' => ['required', 'string'],
+            'unit_id' => ['required'],
             'category_id' => ['required'],
             'brand_id' => ['required'],
-            'barcode' => ['required', 'string'],
-            'product_reference' => ['required', 'string'],
-            'short_description' => ['required', 'string'],
-            'profit_margin' => ['nullable', 'numeric'],
-            'product_tva' => ['required', 'numeric'],
-            'min_stock' => ['required', 'numeric'],
-            'max_stock' => ['required', 'numeric'],
-            'product_type' => ['required'],
+            'short_description' => ['nullable', 'string'],
+            'alert_qty' => ['required'],
             'image_path' => ['required', 'image', 'mimes:jpeg,jpg,png','max:500'],
+            'tax_id' => ['required'],
+            'product_type' => ['nullable'],
+            'product_dpp'=> ['required'],
+            'product_dpp_inc_tax'=> ['required'],
+            'profit_percent'=> ['required'],
+            'product_dsp'=> ['required'],
             'similar_products' => ['nullable', 'array'],
         ];
+
         $messages = [
-            'category_id.required'=> 'Category is Required',
-            'brand_id.required'=> 'Brand is Required',
+            'product_name' => ['Product Name is Required'],
+            'product_sku' => ['Product Sku is Required'],
             'barcode.required'=> 'Barcode is Required',
             'barcode.string'=> 'Barcode name Must be String',
-            'product_reference.required'=> 'Product Reference is Required',
-            'product_reference.string'=> 'Product Reference Must be String',
+            'unit_id' => ['Unit is Required'],
+            'category_id.required'=> 'Category is Required',
+            'brand_id.required'=> 'Brand is Required',
+            'alert_qty' => ['Alert Quantity is Required'],
             'short_description.required'=> 'Short Description is Required',
             'short_description.string'=> 'Short Description Must be String',
-            'profit_margin.numeric'=> 'Profit Margin must be Numeric',
-            'product_tva.required'=> 'TVA is Required',
-            'product_tva.numeric'=> 'TVA must be Numeric',
-            'min_stock.required'=> 'Min Stock is Required',
-            'min_stock.numeric'=> 'Min Stock be Numeric',
-            'max_stock.required'=> 'Max Stock is Required',
-            'max_stock.numeric'=> 'Max Stock must be Numeric',
+            'tax_id' => ['Taxs is Required'],
+            'product_dpp'=> 'Default Purchase Price is Required',
+            'product_dpp_inc_tax'=> 'Default Purchase Price Inc Tax is Required',
+            'profit_percent'=> 'Profit Percent is Required',
+            'product_dsp'=> 'Default Selling Price is Required',
             'product_type.required'=> 'Product Type is Required',
             'image_path.required'=> 'Product Image is Required',
             'image_path.image'=> 'Product Image must be an valid image',
@@ -121,17 +129,22 @@ class ProductController extends Controller
             try {
                 DB::beginTransaction();
                 $product = Product::create([
+                    'product_name' => $request->product_name,
+                    'product_sku' => $request->product_sku,
+                    'product_code' => Product::getCode(),
+                    'barcode' => $request->barcode,
+                    'unit_id' => $request->unit_id,
                     'category_id' => $request->category_id,
                     'brand_id' => $request->brand_id,
-                    'barcode' => $request->barcode,
-                    'product_reference' => $request->product_reference,
                     'short_description' => $request->short_description,
-                    'long_description' => $request->long_description,
-                    'profit_margin' => !empty($request->profit_margin)? $request->profit_margin: 0,
-                    'product_tva' => !empty($request->product_tva)? $request->product_tva: 0,
-                    'min_stock' => !empty($request->min_stock)? $request->min_stock: 0,
-                    'max_stock' => !empty($request->max_stock)? $request->max_stock: 0,
+                    'alert_qty' => $request->alert_qty,
                     'product_type'=> !empty($request->product_type)? $request->product_type: Product::TYPES['Single'],
+                    'tax_id' => $request->tax_id,
+                    'product_dpp' => !empty($request->product_dpp)? $request->product_dpp: 0,
+                    'product_dpp_inc_tax' => !empty($request->product_dpp_inc_tax)? $request->product_dpp_inc_tax: 0,
+                    'profit_percent' => !empty($request->profit_percent)? $request->profit_percent: 0,
+                    'product_dsp' => !empty($request->product_dsp)? $request->product_dsp: 0,
+                    'similar_products' => $request->similar_products,
                     'status' => !empty($request->get('status')) ? $request->status : config('constant.inactive')
                 ]);
                 if (!empty($product)) {
@@ -153,7 +166,7 @@ class ProductController extends Controller
                     if (!empty($request->similar_products) && count($request->similar_products) > 0){
                         $similar = $product->similars()->attach($request->similar_products);
                         if (empty($similar)){
-                            throw new \Exception('Invalid Combo Products information');
+                            throw new \Exception('Invalid Simillar Products information');
                         }
                     }
 
@@ -188,36 +201,41 @@ class ProductController extends Controller
     {
 
         $rules = [
+            'product_name' => ['required', 'string'],
+            'product_sku' => ['required', 'string'],
+            'barcode' => ['required', 'string'],
+            'unit_id' => ['required'],
             'category_id' => ['required'],
             'brand_id' => ['required'],
-            'barcode' => ['required', 'string'],
-            'product_reference' => ['required', 'string'],
-            'short_description' => ['required', 'string'],
-            'profit_margin' => ['nullable', 'numeric'],
-            'product_tva' => ['required', 'numeric'],
-            'min_stock' => ['required', 'numeric'],
-            'max_stock' => ['required', 'numeric'],
-            'product_type' => ['required'],
-            'image_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png','max:500'],
+            'short_description' => ['nullable', 'string'],
+            'alert_qty' => ['required'],
+            'image_path' => ['required', 'image', 'mimes:jpeg,jpg,png','max:500'],
+            'tax_id' => ['required'],
+            'product_type' => ['nullable'],
+            'product_dpp'=> ['required'],
+            'product_dpp_inc_tax'=> ['required'],
+            'profit_percent'=> ['required'],
+            'product_dsp'=> ['required'],
             'similar_products' => ['nullable', 'array'],
         ];
         $messages = [
-            'category_id.required'=> 'Category is Required',
-            'brand_id.required'=> 'Brand is Required',
+            'product_name' => ['Product Name is Required'],
+            'product_sku' => ['Product Sku is Required'],
             'barcode.required'=> 'Barcode is Required',
             'barcode.string'=> 'Barcode name Must be String',
-            'product_reference.required'=> 'Product Reference is Required',
-            'product_reference.string'=> 'Product Reference Must be String',
+            'unit_id' => ['Unit is Required'],
+            'category_id.required'=> 'Category is Required',
+            'brand_id.required'=> 'Brand is Required',
+            'alert_qty' => ['Alert Quantity is Required'],
             'short_description.required'=> 'Short Description is Required',
             'short_description.string'=> 'Short Description Must be String',
-            'profit_margin.numeric'=> 'Profit Margin must be Numeric',
-            'product_tva.required'=> 'TVA is Required',
-            'product_tva.numeric'=> 'TVA must be Numeric',
-            'min_stock.required'=> 'Min Stock is Required',
-            'min_stock.numeric'=> 'Min Stock be Numeric',
-            'max_stock.required'=> 'Max Stock is Required',
-            'max_stock.numeric'=> 'Max Stock must be Numeric',
+            'tax_id' => ['Taxs is Required'],
+            'product_dpp'=> 'Default Purchase Price is Required',
+            'product_dpp_inc_tax'=> 'Default Purchase Price Inc Tax is Required',
+            'profit_percent'=> 'Profit Percent is Required',
+            'product_dsp'=> 'Default Selling Price is Required',
             'product_type.required'=> 'Product Type is Required',
+            'image_path.required'=> 'Product Image is Required',
             'image_path.image'=> 'Product Image must be an valid image',
             'image_path.mimes'=> 'Product Image support only jpeg,jpg,png format',
             'image_path.max'=> 'Product Image max:500kb size',

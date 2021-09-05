@@ -56,7 +56,7 @@ class Product extends Model
     public function getProductInfoAttribute()
     {
         $units = array_flip(self::Units);
-        return $this->attributes['product_reference'].'-'.$this->product_stock().' '.$units[$this->attributes['unit_id']].' (s) ';
+        return $this->attributes['product_name'].'-'.$this->product_stock().' '.$units[$this->attributes['unit_id']].' (s) ';
     }
 
     public function getUnitLabelAttribute()
@@ -79,7 +79,7 @@ class Product extends Model
         if(!empty($request->search_key)){
             $search_key = $request->search_key;
             // dd($search_key);
-            $query = $query->where('product_reference', 'like', '%'.$search_key.'%')
+            $query = $query->where('product_name', 'like', '%'.$search_key.'%')
                 ->orWhere('short_description', 'like', '%'. $search_key.'%');
                 // ->orderByRaw("IF('product_reference' = '{$search_key}',2,IF(product_reference LIKE '%{$search_key}%',1,0)) DESC, length(product_reference)");
         }
@@ -88,12 +88,15 @@ class Product extends Model
 
     public static function getCode()
     {
+
         $last = self::latest()->first();
         if(empty($last)){
             return 'PI00001';
         }else{
+            $product_id = (string)$last->product_id;
+            // dd($last->product_id);
             $code = 'PI';
-            for($i = (5- count($last->product_id)); $i < 5; $i++){
+            for($i = (5- str_word_count($product_id)); $i < 5; $i++){
                 $code .='0';
             }
             return $code;
