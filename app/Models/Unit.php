@@ -22,6 +22,12 @@ class Unit extends Model
         'sort_form',
         'status'
     ];
+    protected $appends=['unit_info'];
+
+    public function getUnitInfoAttribute()
+    {
+        return $this->attributes['unit_name'].' ('.$this->attributes["sort_form"].')';
+    }
 
     public function products()
     {

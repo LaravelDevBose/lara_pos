@@ -155,8 +155,8 @@
                                     </div>
                                 </div>
                                 {{-- search option end --}}
-                                <div id="products" class="table-responsive my-2">
-                                    <table class="table">
+                                <div id="products" class="my-2">
+                                    <table class="table table-striped table-sm">
                                         <thead>
                                         <tr>
                                             <th>#</th>
@@ -175,11 +175,12 @@
                                         </tr>
                                         </thead>
                                         <tbody id="product_show">
-                                        <tr >
-
-                                        </tr>
-
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                     <hr>
                                     <div class="float-right">

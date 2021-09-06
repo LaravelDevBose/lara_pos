@@ -42,28 +42,21 @@
                                         <thead>
                                         <tr>
                                             <th class="text-center">Actions</th>
-                                            <th>Image</th>
+                                            <th class="text-center">Image</th>
+{{--                                            <th>Product Code</th>--}}
                                             <th>Product Name</th>
-                                            <th>Description</th>
+                                            <th class="text-right">Unit Purchase price</th>
+                                            <th class="text-right">Selling price</th>
+                                            <th class="text-center">Product Type</th>
                                             <th>Category</th>
                                             <th>Brand</th>
-                                            <th>Alert Quantity</th>
-                                            <th>Product Type</th>
+                                            <th>Tax</th>
+                                            <th class="text-center">Alert Quantity</th>
+                                            <th class="text-center">Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($products as $product)
-                                                <tr>
-                                                    <td><a href="">edit</a></td>
-                                                    <td>{{ $product->product_name }}</td>
-                                                    <td>{{ $product->product_name }}</td>
-                                                    <td>{{ $product->short_description }}</td>
-                                                    <td>{{ $product->category->category_name }}</td>
-                                                    <td>{{ $product->brand->brand_name }}</td>
-                                                    <td>{{ $product->alert_qty }}</td>
-                                                    <td>{{ $product->product_type }}</td>
-                                                </tr>
-                                            @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -92,33 +85,30 @@
                 serverSide: true,
                 searching:  true,
                 fixedHeader: true,
-                responsive: true,
-                fixedColumns: {
-                    leftColumns: 1,
-                    rightColumns: 1
-                },
                 ajax: {
                     url: $("#BCSDataTable").attr('data-url'),
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 },
                 columnDefs: [
                     {
-                        className: "d-none d-xl-table-cell", targets: [3],
-                        className: "text-center", targets: [0],
-                        className: "text-right", targets: [7,8],
+                        className: "d-none d-xl-table-cell", targets: [6,7,8,9],
+                        className: "text-center", targets: [0,1,5,9,10],
+                        className: "text-right", targets: [3,4],
                     }
                 ],
                 columns: [
                     {data: 'action', name: 'action', searchable: false, orderable: false},
                     {data: 'image', name: 'image', searchable: false, orderable: false},
-                    {data: 'product_reference', name: 'product_reference'},
-                    {data: 'short_description', name: 'short_description', orderable: false},
+                    // {data: 'product_code', name: 'product_code'},
+                    {data: 'product_name', name: 'product_name'},
+                    {data: 'product_dpp_inc_tax', name: 'product_dpp_inc_tax'},
+                    {data: 'product_dsp', name: 'product_dsp'},
+                    {data: 'product_type', name: 'product_type'},
                     {data: 'category_id', name: 'category_id'},
                     {data: 'brand_id', name: 'brand_id'},
-                    {data: 'product_tva', name: 'product_tva'},
-                    {data: 'min_stock', name: 'min_stock'},
-                    {data: 'max_stock', name: 'max_stock'},
-                    {data: 'product_type', name: 'product_type'},
+                    {data: 'tax_id', name: 'tax_id'},
+                    {data: 'alert_qty', name: 'alert_qty'},
+                    {data: 'status', name: 'status'},
                 ]
             });
         });

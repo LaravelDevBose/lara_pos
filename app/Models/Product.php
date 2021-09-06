@@ -78,9 +78,9 @@ class Product extends Model
 
         if(!empty($request->search_key)){
             $search_key = $request->search_key;
-            // dd($search_key);
             $query = $query->where('product_name', 'like', '%'.$search_key.'%')
-                ->orWhere('short_description', 'like', '%'. $search_key.'%');
+                ->orWhere('product_code', 'like', '%'. $search_key.'%')
+                ->orWhere('product_sku', 'like', '%'. $search_key.'%');
                 // ->orderByRaw("IF('product_reference' = '{$search_key}',2,IF(product_reference LIKE '%{$search_key}%',1,0)) DESC, length(product_reference)");
         }
         return $query;

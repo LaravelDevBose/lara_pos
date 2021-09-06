@@ -18,16 +18,18 @@ use Yajra\DataTables\DataTables;
 class ProductController extends Controller
 {
     public function index(){
-        $products = Product::all();
-        return view('modules.product.index', compact('poducts'));
+        return view('modules.product.index');
     }
 
     public function datatable(Request $request)
     {
         $dataTable = Product::query()->notDelete()
-            ->with('category', 'brand')->latest();
+            ->with('category', 'brand', 'tax', 'unit', 'attachment')->latest();
 
         return DataTables::of($dataTable)
+            ->editColumn('product_name', function ($data){
+                return $data->product_name.' <small> ('.$data->product_code.') </small>';
+            })
             ->editColumn('category_id', function ($data){
                 return $data->category->category_name;
             })
@@ -37,6 +39,12 @@ class ProductController extends Controller
             ->editColumn('product_type', function ($data){
                 $types = array_flip(Product::TYPES);
                 return $types[$data->product_type];
+            })
+            ->editColumn('tax_id', function ($data){
+                return $data->tax->tax_info;
+            })
+            ->editColumn('status', function ($data){
+                return ($data->status == config('constant.active'))? '<span class="badge badge-success badge-md">Active</span>': '<span class="badge badge-warning badge-md">Inactive</span>';
             })
             ->addColumn('image', function ($data){
                 return '<img src="'.$data->attachment->image_path.'" style="width:40px; height:40px;">';
@@ -48,7 +56,7 @@ class ProductController extends Controller
                 $actionButton .= '<a  href="' . route('products.edit', $data->product_id) . '"  title="Edit" class="dropdown-item"><i class="far fa-edit"></i> Edit </a>';
                 $actionButton .= '</span></span>';
                 return $actionButton;
-            })->rawColumns(['action', 'image'])->make(true);
+            })->rawColumns(['action', 'image', 'status', 'product_name'])->make(true);
 
     }
 
@@ -59,8 +67,8 @@ class ProductController extends Controller
         }])->get();
 
         $brands = Brand::isActive()->latest()->pluck('brand_name', 'brand_id');
-        $unites = Unit::isActive()->latest()->get(['unit_name', 'unit_id']);
-        $taxes = Tax::isActive()->latest()->get(['tax_title', 'tax_id']);
+        $unites = Unit::isActive()->latest()->get()->pluck('unit_info', 'unit_id');
+        $taxes = Tax::isActive()->latest()->get();
         $types = array_flip(Product::TYPES);
         $existProducts = Product::isActive()->latest()->pluck('product_id');
         return view('modules.product.create_update', compact('categories', 'brands', 'types', 'existProducts','unites','taxes'));
@@ -80,7 +88,7 @@ class ProductController extends Controller
             'short_description' => ['nullable', 'string'],
             'alert_qty' => ['required'],
             'image_path' => ['required', 'image', 'mimes:jpeg,jpg,png','max:500'],
-            'tax_id' => ['required'],
+//            'tax_id' => ['required'],
             'product_type' => ['nullable'],
             'product_dpp'=> ['required'],
             'product_dpp_inc_tax'=> ['required'],
@@ -100,7 +108,7 @@ class ProductController extends Controller
             'alert_qty' => ['Alert Quantity is Required'],
             'short_description.required'=> 'Short Description is Required',
             'short_description.string'=> 'Short Description Must be String',
-            'tax_id' => ['Taxs is Required'],
+            'tax_id' => ['Tax is Required'],
             'product_dpp'=> 'Default Purchase Price is Required',
             'product_dpp_inc_tax'=> 'Default Purchase Price Inc Tax is Required',
             'profit_percent'=> 'Profit Percent is Required',
@@ -145,7 +153,7 @@ class ProductController extends Controller
                     'profit_percent' => !empty($request->profit_percent)? $request->profit_percent: 0,
                     'product_dsp' => !empty($request->product_dsp)? $request->product_dsp: 0,
                     'similar_products' => $request->similar_products,
-                    'status' => !empty($request->get('status')) ? $request->status : config('constant.inactive')
+                    'status' => !empty($request->get('status')) ? $request->status : config('constant.active')
                 ]);
                 if (!empty($product)) {
 

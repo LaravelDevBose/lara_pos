@@ -12,7 +12,7 @@ class Tax extends Model
     use HasFactory;
     use SoftDeletes;
     use HasFilter;
- 
+
     protected $table='taxes';
     protected $primaryKey='tax_id';
 
@@ -22,6 +22,13 @@ class Tax extends Model
         'tax_percent',
         'status'
     ];
+
+    protected $appends=['tax_info'];
+
+    public function getTaxInfoAttribute()
+    {
+        return $this->attributes['tax_title'].'@'.$this->attributes['tax_percent'].'%';
+    }
 
     public function products()
     {
