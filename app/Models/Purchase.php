@@ -29,6 +29,7 @@ class Purchase extends Model
         'location_id',
         'reference_no',
         'purchase_date',
+        'pay_term_type',
         'total_qty',
         'subtotal',
         'discount_type',
@@ -37,7 +38,6 @@ class Purchase extends Model
         'tax_amount',
         'total_amount',
         'pay_term_number',
-        'pay_term_type',
         'purchase_status',
         'status'
     ];

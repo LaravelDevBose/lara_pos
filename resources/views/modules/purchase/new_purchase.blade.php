@@ -19,6 +19,9 @@
         @include('layouts.includes.breadcrumb', $breadcrumbs)
     </div>
 
+    <div id="test">
+        <p></p>
+    </div>
     <div class="content-body">
         <form action="" class="GlobalFormValidation">
             <div class="row">
@@ -139,6 +142,13 @@
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        </ul>
+                                    </div>
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
                                         <div class="form-group">
@@ -158,19 +168,18 @@
                                 <div id="products" class="my-2">
                                     <table class="table table-striped table-sm">
                                         <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Product Name</th>
-                                            <th>Purchase Quantity</th>
-                                            <th>Unit Cost (Before Discount)</th>
-                                            <th>Discount Percent</th>
-                                            <th>Unit Cost (Before Tax)</th>
-                                            <th>Subtotal (Before Tax)</th>
-                                            <th>Product Tax</th>
-                                            <th>Net Cost</th>
-                                            <th>Line Total</th>
-                                            <th>Profit Margin %</th>
-                                            <th>Unit Selling Price (Inc. tax)</th>
+                                        <tr class="">
+                                            <th>Product<br>Name</th>
+                                            <th>Purchase<br>Quantity</th>
+                                            <th>Unit Cost<br>(Before Dis)</th>
+                                            <th>Discount<br>Percent</th>
+                                            <th>Unit Cost<br>(Before Tax)</th>
+                                            <th>Subtotal<br>(Before Tax)</th>
+                                            <th>Product<br>Tax</th>
+                                            <th>Net<br>Cost</th>
+                                            <th>Line<br>Total</th>
+                                            <th>Profit<br>Margin %</th>
+                                            <th>Unit Selling Price<br>(Inc. tax)</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -572,6 +581,7 @@
 <!-- END: Page Vendor JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
 <script>
+    let sum = 0;
     $(document).ready(function() {
         $('#paymentMethodChange').on('change', function (e) {
             $('#cardInfo').hide();
@@ -588,8 +598,10 @@
 
         $('.BCS-product-data-ajax').on('select2:select', function (e) {
             var data = e.params.data;
-                $('#product_show').append(' <tr> <td>'+ data.product_id +'</td>    <td>'+ data.product_name +'</td>   <td> <input type="text" value="1"> </td>  <td>'+data.unit_id+'</td>  <td><input type="number" value="0"></td>  <td>'+data.unit_id+'</td>  <td>0</td>  <td>0</td>  <td>0</td>  <td>0</td>  <td>'+data.profit_margin+'</td>  <td>'+ data.unit_id +'</td>  <td> <a class="btn btn-sm btn-danger" href="">X</a> </td>  </tr>')
+                $('#product_show').append(' <tr> <td>'+ data.product_name +'</td>   <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td><input class="form-control form-control-sm" type="number" value="0"></td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <a class="btn btn-sm btn-danger" href="">X</a> </td>  </tr>')
                     $(this).val(null).trigger('change');
+
+
         });
     });
 
@@ -602,8 +614,7 @@
                 type:'GET',
                 dataType:'json',
                 success:function(data){
-                    $('#details').append('<p> <h4>Information</h4> <br> '+ data.city +' </p>')
-                }
+                    $('#details').append('<div> <h4>Supplier Self info.</h4> <div class="ml-2"> <p><span>'+ data.first_name+'</span> <span>'+ data.last_name+'</span> <span>('+data.mobile_no+')</span> <br><span>'+data.email+'</span> </p></div> <div><h4>Supplier Location</h4> <div class="ml-2"><p> <sapn>'+data.state+'</sapn>, <span>'+data.city+'</span>, <span>'+data.country+'</span>.</p></div> </div> </div>')                }
             })
         }
     })

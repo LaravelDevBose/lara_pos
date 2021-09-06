@@ -57,6 +57,7 @@ $(document).ready(function() {
                     item.id = item.product_id;
                     item.text = item.product_info;
                     return item;
+
                 });
                 return {
                     results: data,
@@ -73,7 +74,7 @@ $(document).ready(function() {
         minimumInputLength: 2,
     });
 
-    
+
 
 
 });
