@@ -58,6 +58,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 
     Route::group(['prefix'=>'ajax', 'as'=>'ajax.'], function (){
         Route::get('/product-list', [ProductController::class, 'ajax_get_products'])->name('get.products');
+        Route::get('/get_purchase_entry', [PurchaseController::class, 'get_purchase_entry_row'])->name('get.purchase_entry');
     });
 
     Route::resource('/business-locations', BusinessLocationController::class)->names('business_locations');

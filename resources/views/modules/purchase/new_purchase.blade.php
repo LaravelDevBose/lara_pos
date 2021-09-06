@@ -4,6 +4,27 @@
 
 @section('pageCss')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/pickers/pickadate/pickadate.css')}}">
+<style>
+    .table.table-sm th {
+        padding: 10px 5px;
+        border: 1px solid #e3ebf3;
+        vertical-align: bottom;
+        word-wrap: break-word;
+        line-height: 1.42857143;
+        white-space: normal;
+    }
+    .table.table-sm td{
+        padding: 5px;
+        vertical-align: top!important;
+        word-wrap: break-word;
+        line-height: 1.42857143;
+        white-space: normal;
+    }
+    .table-responsive{
+        min-height: .01%;
+        overflow-x: auto;
+    }
+</style>
 @endsection
 
 @section('pageContent')
@@ -142,13 +163,6 @@
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
-                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                                    <div class="heading-elements">
-                                        <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                        </ul>
-                                    </div>
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
                                         <div class="form-group">
@@ -156,45 +170,63 @@
                                                 <div class="input-group-prepend">
                                                     <button class="btn btn-primary" type="button"><i class="la la-search"></i></button>
                                                 </div>
-                                                <select class="form-control BCS-product-data-ajax" id="select2-ajax"></select>
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-primary" type="button">+</button>
-                                                </div>
+                                                <select class="form-control BCS-product-data-ajax" id="select2-ajax"
+                                                        data-purchase_entry_url="{{ route('ajax.get.purchase_entry') }}"
+                                                ></select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 {{-- search option end --}}
-                                <div id="products" class="my-2">
-                                    <table class="table table-striped table-sm">
-                                        <thead>
-                                        <tr class="">
-                                            <th>Product<br>Name</th>
-                                            <th>Purchase<br>Quantity</th>
-                                            <th>Unit Cost<br>(Before Dis)</th>
-                                            <th>Discount<br>Percent</th>
-                                            <th>Unit Cost<br>(Before Tax)</th>
-                                            <th>Subtotal<br>(Before Tax)</th>
-                                            <th>Product<br>Tax</th>
-                                            <th>Net<br>Cost</th>
-                                            <th>Line<br>Total</th>
-                                            <th>Profit<br>Margin %</th>
-                                            <th>Unit Selling Price<br>(Inc. tax)</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="product_show">
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th></th>
+                                <div class="row my-2">
+                                    <div class="col-md-12 border-bottom">
+                                        <div class="table-responsive mb-2">
+                                            <table class="table table-striped table-sm table-bordered text-center" id="BCS_purchase_entry_table">
+                                                <thead class="bg-primary text-white">
+                                                <tr class="">
+                                                    <th >Product Details</th>
+                                                    <th >Purchase Quantity</th>
+                                                    <th >Unit Cost
+                                                        <p class="m-0"><small>(Before Dis)</small></p>
+                                                    </th>
+                                                    <th >Discount Percent</th>
+                                                    <th >Unit Cost
+                                                        <p class="m-0"><small>(Before Tax)</small></p>
+                                                    </th>
+                                                    <th >Subtotal
+                                                        <p class="m-0"><small>(Before Tax)</small></p>
+                                                    </th>
+                                                    <th >Product Tax</th>
+                                                    <th >Net Cost</th>
+                                                    <th >Line Total</th>
+                                                    <th >Profit Margin
+                                                        <p class="m-0"><small>(%)</small></p>
+                                                    </th>
+                                                    <th >Unit Selling Price
+                                                        <p class="m-0"><small>(Inc. tax)</small></p>
+                                                    </th>
+                                                    <th >Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 offset-7">
+                                        <table class="table table-borderless mt-2 table-md">
+                                            <tbody>
+                                            <tr style="border: 0">
+                                                <th class="col-7 text-right">Total Item: </th>
+                                                <th class="col-3 text-right pl-3"><span id="BCS_total_item">3.00</span></th>
                                             </tr>
-                                        </tfoot>
-                                    </table>
-                                    <hr>
-                                    <div class="float-right">
-                                        <p>Total Items: 0.00</p>
-                                        <p id="amount">Net Total Amount: </p>
+                                            <tr style="border: 0">
+                                                <th class="col-7 text-right">Net Total Amount: </th>
+                                                <th class="col-3 text-right pl-3"><span id="BCS_total_amount">$5354.25</span></th>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <input type="hidden" id="total_row" value="0">
                                     </div>
                                 </div>
                                 {{-- product show end --}}
@@ -578,6 +610,7 @@
 <!-- BEGIN: Page Vendor JS-->
 <script src="{{ asset('assets/vendors/js/pickers/pickadate/picker.js') }}"></script>
 <script src="{{ asset('assets/vendors/js/pickers/pickadate/picker.date.js') }}"></script>
+<script src="{{ asset('bcs-assets/js/purchase.js') }}"></script>
 <!-- END: Page Vendor JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
 <script>
@@ -595,14 +628,6 @@
                 $('#bankInfo').show();
             }
         });
-
-        $('.BCS-product-data-ajax').on('select2:select', function (e) {
-            var data = e.params.data;
-                $('#product_show').append(' <tr> <td>'+ data.product_name +'</td>   <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td><input class="form-control form-control-sm" type="number" value="0"></td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <input class="form-control form-control-sm" type="text" value="1"> </td>  <td> <a class="btn btn-sm btn-danger" href="">X</a> </td>  </tr>')
-                    $(this).val(null).trigger('change');
-
-
-        });
     });
 
     //supplier and customer information show for purchase and sell page
@@ -618,11 +643,6 @@
             })
         }
     })
-
-
-
-
-
 </script>
 @endsection
 {{-- /*

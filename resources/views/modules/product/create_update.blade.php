@@ -470,7 +470,6 @@
             });
 
             $('#tax_id').on('change',function(e){
-                console.log($(this).find(':selected').data('percent'));
                 tax = $(this).find(':selected').data('percent');
                 calculation();
             });//end dpp and dpp_inc_tax
