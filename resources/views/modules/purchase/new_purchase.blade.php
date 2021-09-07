@@ -35,7 +35,6 @@
                 'Purchase List' => route('purchases.index'),
                 'Purchase Create' => 'Add new purchase'
             ];
-
         ?>
         @include('layouts.includes.breadcrumb', $breadcrumbs)
     </div>
