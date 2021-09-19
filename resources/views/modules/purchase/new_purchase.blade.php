@@ -30,6 +30,8 @@
 @section('pageContent')
 <div class="content-wrapper">
     <div class="content-header row">
+
+
         <?php
             $breadcrumbs = [
                 'Purchase List' => route('purchases.index'),
@@ -40,7 +42,8 @@
     </div>
 
     <div id="test">
-        <p></p>
+        <p ></p>
+
     </div>
     <div class="content-body">
         <form action="" class="GlobalFormValidation">
@@ -221,7 +224,7 @@
                                             </tr>
                                             <tr style="border: 0">
                                                 <th class="col-7 text-right">Net Total Amount: </th>
-                                                <th class="col-3 text-right pl-3"><span id="BCS_total_amount">$5354.25</span></th>
+                                                <th class="col-3 text-right pl-3">$<span id="BCS_total_amount">5354.25</span></th>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -243,11 +246,11 @@
                                     <div class="col-sm-12 col-md-4">
                                         <div class="form-group">
                                             <div class="controls">
-                                                <label>Discount Type: <b class="font-weight-bold text-warning"></b></label>
-                                                <select class="select2 form-control" name="discrount_type" id="">
-                                                    <option value="None">None</option>
-                                                    <option value="Fixed">Fixed</option>
-                                                    <option value="Percentage">Percentage</option>
+                                                <label>Discount Type: <b class="font-weight-bold text-warning" ></b></label>
+                                                <select class="select2 form-control" name="discrount_type" id="discrount_type">
+                                                    <option value="none">None</option>
+                                                    <option value="fixed" >Fixed</option>
+                                                    <option value="percentage">Percentage</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -263,7 +266,7 @@
                                     <div class="col-sm-12 col-md-4">
                                         <div class="form-group">
                                             <div class="controls mt-3 float-right">
-                                                <span id="discount_amount_show">Discount:(-) $ 0.00</span>
+                                               <p>Discount:(-) $ <span id="discount_amount_show"> </span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -271,9 +274,9 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Purchase Tax: <b class="font-weight-bold text-warning"></b></label>
-                                                <select name="discount_type" class="select2 form-control" id="">
+                                                <select name="discount_type" class="select2 form-control" id="purchase_tax">
                                                     <option value="None">None</option>
-                                                    <option value="Fixed">Vat@10%</option>
+                                                    <option value="fixed">Vat@10%</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -282,7 +285,7 @@
                                     <div class="col-sm-12 col-md-4 offset-md-4">
                                         <div class="form-group">
                                             <div class="controls mt-3 float-right">
-                                                <span>Purchase Tax:(+) $ 0.00</span>
+                                                <p>Purchase Tax:(+) $<span id="tax_calculate"></span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -318,7 +321,7 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>(+) Additional Shipping charges:</label>
-                                                <input type="number" class="form-control" name="shipping_charge" value="0">
+                                                <input type="number" class="form-control" name="shipping_charge" id="shipping_charge" value="0">
                                             </div>
                                         </div>
                                     </div>
@@ -407,7 +410,7 @@
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                         <div class="form-group">
                                             <div class="controls float-right">
-                                                <span>Purchase Total: $ 0.00</span>
+                                               <p>Purchase Total: $<span id="total_price"></span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -437,6 +440,7 @@
                                                        data-rule-required='true'
                                                        data-fv-notempty-message='Paid amount Is Required'
                                                        required
+                                                       id="paid_amount"
                                                 >
                                             </div>
                                         </div>
@@ -473,7 +477,7 @@
                                                         data-fv-notempty-message='Payment Method Is Required'
                                                         required
                                                 >
-                                                    @if(!empty($paymentMethods) && count($paymentMethods) > 0)
+                                                    @if(!empty($paymentMethods) && count(   $paymentMethods) > 0)
                                                         @foreach($paymentMethods as $key => $value)
                                                             <option value="{{ $key }}">{{ $value }}</option>
                                                         @endforeach
@@ -503,6 +507,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-sm-12 col-md-4 ml-auto">
+                                        <div class="form-group">
+                                            <div class="controls mt-2">
+                                                <p><b>Total Due:</b><span id="total_due"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <hr>
                                 <div class="row" id="cardInfo" style="display: none">
@@ -612,7 +624,67 @@
 <script src="{{ asset('bcs-assets/js/purchase.js') }}"></script>
 <!-- END: Page Vendor JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    $(document).ready(function(){
+        $("#discrount_type").change(function(){
+            var selectValue = $(this).children("option:selected").val();
+            $('#discount_amount_value').mouseleave(function(){
+                if (selectValue == 'fixed') {
+                    var productAmount = $('#BCS_total_amount').text();
+                    var newAmount = $('#discount_amount_value').val();
+                    //var disFixed = productAmount-newAmount;
+                    $('#discount_amount_show').text(newAmount);
+
+                }
+                if (selectValue == 'percentage') {
+                    var productAmount = $('#BCS_total_amount').text();
+                    var newAmount = $('#discount_amount_value').val();
+                    var disPercentage = (newAmount/100)*productAmount;
+                    var convertRound = disPercentage.toFixed(2)
+                    $('#discount_amount_show').text(convertRound);
+                }
+            })
+
+        });
+
+        //Purchase Tax
+        $("#purchase_tax").change(function(){
+            var selectValue = $(this).children("option:selected").val();
+            if (selectValue == 'fixed') {
+                var productAmount = $('#BCS_total_amount').text();
+                var newTax = (productAmount*0.10).toFixed(2);
+                $('#tax_calculate').text(newTax);
+
+            }
+        });
+        //shipping charge
+        $("#shipping_charge").mouseleave(function(){
+            var mainProductPrice = $("#BCS_total_amount").text();
+            var netTax = $("#tax_calculate").text();
+            var netDisCount = $("#discount_amount_show").text();
+            var netShippingCharge = $("#shipping_charge").val();
+                var convert = parseInt(netShippingCharge);
+                var convert2 = parseInt(netTax);
+                var convertMainPrice = parseInt(mainProductPrice);
+            var totalPrc = (convert+convert2)-netDisCount;
+
+            var totalprice = convertMainPrice+totalPrc;
+            $("#total_price").text(totalprice);
+            console.log(totalprice)
+        });
+        $("#paid_amount").mouseleave(function(){
+           var totalPrice = $("#total_price").text();
+            var paidAmount= $("#paid_amount").val();
+            var convertPaidAmount = parseInt(paidAmount);
+            var totalDue = totalPrice-convertPaidAmount
+             $("#total_due").text(totalDue);
+
+
+        });
+
+
+    });
     let sum = 0;
     $(document).ready(function() {
         $('#paymentMethodChange').on('change', function (e) {
@@ -642,8 +714,12 @@
             })
         }
     })
+
+    //calculate add purchases
+
+
 </script>
-@endsection
+
 {{-- /*
 * Author: Arup Kumer Bose
 * Email: arupkumerbose@gmail.com
