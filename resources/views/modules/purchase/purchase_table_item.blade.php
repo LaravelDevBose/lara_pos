@@ -7,7 +7,6 @@
     <td>
         <input type="number" name="purchase[{{$rowCount}}][quantity]" value="1.00" step="0.01" class="form-control input-sm purchase_quantity" autocomplete="off">
         <p class="text-left mb-0"><small class="text-muted">{{ $product->unit->sort_form }}(s)</small></p>
-
     </td>
     <td>
         <input type="number" name="purchase[{{$rowCount}}][unit_pp_without_discount]" value="{{ $product->product_dpp }}" step="0.01" class="form-control input-sm unit_cost_without_discount" autocomplete="off">

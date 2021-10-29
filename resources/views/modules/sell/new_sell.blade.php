@@ -8,6 +8,25 @@
     .select2.select2-container{
         width: 90%!important;
     }
+    .table.table-sm th {
+        padding: 10px 5px;
+        border: 1px solid #e3ebf3;
+        vertical-align: bottom;
+        word-wrap: break-word;
+        line-height: 1.42857143;
+        white-space: normal;
+    }
+    .table.table-sm td{
+        padding: 5px;
+        vertical-align: top!important;
+        word-wrap: break-word;
+        line-height: 1.42857143;
+        white-space: normal;
+    }
+    .table-responsive{
+        min-height: .01%;
+        overflow-x: auto;
+    }
 </style>
 @endsection
 
@@ -21,6 +40,9 @@
         ];
         ?>
         @include('layouts.includes.breadcrumb', $breadcrumbs)
+    </div>
+    <div id="test">
+        <p></p>
     </div>
 
     <!--start here sell-->
@@ -163,36 +185,57 @@
                                             <div class="input-group-prepend">
                                                 <button class="btn btn-primary" type="button"><i class="la la-search"></i></button>
                                             </div>
-                                            <select class="form-control BCS-product-data-ajax BCS-product-sell" id="select2-ajax"></select>
+                                            <select class="form-control BCS-product-data-ajax" id="select2-ajax"
+                                                    data-sell_entry_url="{{ route('ajax.get.sell_entry') }}"
+                                            ></select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="my-3">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Unit Price</th>
-                                        <th scope="col">Discount</th>
-                                        <th scope="col">Tax</th>
-                                        <th scope="col">Price inc. tax</th>
-                                        <th scope="col">Subtotal</th>
-                                        <th scope="col">X</th>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="product_show">
-                                    </tbody>
-                                </table>
-                                <div class="float-right">
-                                    <p>
-                                        <span>Items: 0.00</span>
-                                        <span> Total: 0.00 </span>
-                                    </p>
+                            {{-- search option end --}}
+                            <div class="row my-2">
+                                <div class="col-md-12 border-bottom">
+                                    <div class="table-responsive mb-2">
+                                        <table class="table table-striped table-sm table-bordered text-center" id="BCS_sell_entry_table">
+                                            <thead class="bg-primary text-white">
+                                            <tr class="">
+                                                <th >Product</th>
+                                                <th >Quantity</th>
+                                                <th >Unit Price</th>
+                                                <th >Discount</th>
+                                                <th >Unit Cost
+                                                    <p class="m-0"><small>(Before Tax)</small></p>
+                                                </th>
+                                                <th >Subtotal
+                                                    <p class="m-0"><small>(Before Tax)</small></p>
+                                                </th>
+                                                <th >Tax</th>
+                                                <th >Price Inc. Tax</th>
+                                                <th >Sub Total</th>
+                                                <th >Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 offset-7">
+                                    <table class="table table-borderless mt-2 table-md">
+                                        <tbody>
+                                        <tr style="border: 0">
+                                            <th class="col-7 text-right">Total Item: </th>
+                                            <th class="col-3 text-right pl-3"><span id="BCS_total_item">0.00</span></th>
+                                        </tr>
+                                        <tr style="border: 0">
+                                            <th class="col-7 text-right">Net Total Amount: </th>
+                                            <th class="col-3 text-right pl-3"><span id="BCS_total_amount">0.00</span></th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" id="total_row" value="0">
                                 </div>
                             </div>
+                            {{-- product show end --}}
                         </div>
                     </div>
                 </div>
@@ -540,6 +583,9 @@
 @section('pageJs')
 <script src="{{ asset('assets/vendors/js/pickers/pickadate/picker.js') }}"></script>
 <script src="{{ asset('assets/vendors/js/pickers/pickadate/picker.date.js') }}"></script>
+<script src="{{ asset('bcs-assets/js/sell.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -556,11 +602,6 @@
             }
         });
 
-        $('.BCS-product-data-ajax').on('select2:select', function (e) {
-            var data = e.params.data;
-                $('#product_show').append(' <tr> <td>'+ data.product_name +'</td>    <td>1</td>   <td> 0 </td> <td> 0 </td> <td> 0 </td>  <td>0</td>  <td>0</td>   <td> <a class="btn btn-sm btn-danger" href="">X</a> </td>  </tr>')
-                    $(this).val(null).trigger('change');
-        });
     });
 
     //supplier and customer information show for purchase and sell page

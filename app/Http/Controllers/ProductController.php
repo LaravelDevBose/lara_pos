@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tax;
 use App\Models\Unit;
+use App\Mosels\Attachment;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -336,8 +337,14 @@ class ProductController extends Controller
     //product show on purchase page
     public function purchase_product($id)
     {
-
         $product = Product::query()->Purchase($id);
+        return response()->json($product, 200);
+    }
+
+    //product show on sell page
+    public function sell_product($id)
+    {
+        $product = Product::query()->Sell($id);
         return response()->json($product, 200);
     }
 }

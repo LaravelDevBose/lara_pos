@@ -1,6 +1,6 @@
 $(document).ready(()=>{
     $('.BCS-product-data-ajax').on('select2:select', function (e) {
-        let row_count =  $('#total_row').val();
+        let row_count = $('#total_row').val();
         var data ={
             product_id: e.params.data.product_id,
             row_count:row_count,
@@ -112,7 +112,7 @@ $(document).ready(()=>{
         let dsp = parseFloat(row.find('.default_sell_price').val());
         let unit_price_inc_tax = parseFloat(row.find('.purchase_unit_price_inc_tax').val());
         let profit = dsp - unit_price_inc_tax;
-        let profit_percent = ((profit /unit_price_inc_tax) *100);
+        let profit_percent = ((profit /unit_price_inc_tax) *100 );
         row.find('.line_profit_percent').val(profit_percent.toFixed(2));
     }
 

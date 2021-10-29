@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 
     Route::resource('products', ProductController::class);
     Route::get('/purchase/product/{id}', [ProductController::class, 'purchase_product']);
+    Route::get('/sell/product/{id}', [ProductController::class, 'sell_product']);
     Route::get('/datatable/products', [ProductController::class, 'datatable'])->name('products.datatable');
 
     Route::resource('purchases', PurchaseController::class);
@@ -59,6 +60,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::group(['prefix'=>'ajax', 'as'=>'ajax.'], function (){
         Route::get('/product-list', [ProductController::class, 'ajax_get_products'])->name('get.products');
         Route::get('/get_purchase_entry', [PurchaseController::class, 'get_purchase_entry_row'])->name('get.purchase_entry');
+        Route::get('/get_sell_entry', [SellController::class, 'get_sell_entry_row'])->name('get.sell_entry');
     });
 
     Route::resource('/business-locations', BusinessLocationController::class)->names('business_locations');
