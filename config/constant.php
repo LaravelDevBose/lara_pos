@@ -7,9 +7,9 @@ return[
     'block'=>4,
 
     'discountTypes'=>[
-        'None'=>1,
-        'Percent'=>2,
-        'Fixed'=>3
+        'None'=>0,
+        'Percent'=>1,
+        'Fixed'=>2
     ],
     'pay_terms_type'=>[
         'Days'=>1,

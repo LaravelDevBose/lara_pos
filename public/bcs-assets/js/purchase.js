@@ -118,7 +118,6 @@ $(document).ready(()=>{
 
     function __calculate_total() {
         var rows = $('#BCS_purchase_entry_table tbody').find('tr');
-        console.log(rows);
         let BCS_total_item = 0;
         let BCS_total_amount = 0;
         let total_row = 0;
@@ -132,5 +131,32 @@ $(document).ready(()=>{
         $('#total_row').val(total_row);
         $('#BCS_total_item').html(BCS_total_item.toFixed(2));
         $('#BCS_total_amount').html(BCS_total_amount.toFixed(2));
+        $('#BCS_total_amount_hidden').val(BCS_total_amount.toFixed(2));
+        $('#total_after_dis_hidden').val(BCS_total_amount.toFixed(2));
+        $('#discount_amount_show').html(BCS_total_amount.toFixed(2));
     }
+
+    $(document).on('change', '#discount_type, #discount_amount_value', function (){
+        let net_total = $('#BCS_total_amount_hidden').val();
+        let discount_type = $('#discount_type').val();
+        let discount_value = $('#discount_amount_value').val();
+        let after_dis_total = 0;
+        if (discount_type == 2){
+            if(discount_value > 100){
+                $('#discount_amount_value').parents('.form-group').addClass('has-error');
+                $('#discount_amount_value').after('<small class="help-block text-danger">This value is not valid less than 100</small>');
+            }
+
+        }
+
+        if(discount_type == 0){
+            $('#discount_amount_value').attr('disabled', 'disabled');
+        }else{
+            $('#discount_amount_value').removeAttr('disabled');
+        }
+
+        if (discount_type == 1){
+            after_dis_total = net_total -discount_value;
+        }
+    })
 });

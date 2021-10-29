@@ -217,11 +217,14 @@
                                             <tbody>
                                             <tr style="border: 0">
                                                 <th class="col-7 text-right">Total Item: </th>
-                                                <th class="col-3 text-right pl-3"><span id="BCS_total_item">3.00</span></th>
+                                                <th class="col-3 text-right pl-3"><span id="BCS_total_item">0.00</span></th>
                                             </tr>
                                             <tr style="border: 0">
                                                 <th class="col-7 text-right">Net Total Amount: </th>
-                                                <th class="col-3 text-right pl-3"><span id="BCS_total_amount">$5354.25</span></th>
+                                                <th class="col-3 text-right pl-3">
+                                                    <span id="BCS_total_amount">0.00</span>
+                                                    <input type="hidden" name="net_total" id="BCS_total_amount_hidden">
+                                                </th>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -244,10 +247,10 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Discount Type: <b class="font-weight-bold text-warning"></b></label>
-                                                <select class="select2 form-control" name="discrount_type" id="">
-                                                    <option value="None">None</option>
-                                                    <option value="Fixed">Fixed</option>
-                                                    <option value="Percentage">Percentage</option>
+                                                <select class="select2 form-control" name="discount_type" id="discount_type">
+                                                    <option value="0">None</option>
+                                                    <option value="1">Fixed</option>
+                                                    <option value="2">Percentage</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -256,14 +259,15 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Discount Amount:</label>
-                                                <input id="discount_amount_value" type="number" class="form-control" name="discount_amount">
+                                                <input id="discount_amount_value"  type="number" class="form-control" name="discount_amount" value="0">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <div class="form-group">
                                             <div class="controls mt-3 float-right">
-                                                <span id="discount_amount_show">Discount:(-) $ 0.00</span>
+                                                Discount:(-) <span id="discount_amount_show"> $ 0.00</span>
+                                                <input type="hidden" name="total_after_discount" id="total_after_dis_hidden">
                                             </div>
                                         </div>
                                     </div>
